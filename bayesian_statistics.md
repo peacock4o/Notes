@@ -1,0 +1,266 @@
+bayesian_statistics
+===================
+- Category: Learning
+- Tags: 
+- Created: 2024-12-20T18:05:42-08:00
+
+01 - GOLEM OF PRAGUE - https://www.youtube.com/watch?v=FdnMWdICdRs
+~~~~~~~~~~~~~~~~~~~~
+- Thinking about how science influences statistics (an applied form of mathematics)
+- Bayesian inference vs. frequentism is a common debate in stats courses
+	- Won't discuss it though. Looking at causal inference instead. Bayesian debate is mostly settled
+		- Science before statistics.
+		- For statistical models to produce scientific insight, they require additional scientific (causal) models where changing a var changes another
+		- The reasons for a statistical analysis are not found in the data but in the causes of the data. Numbers mean nothing without context.
+			- Data cannot be extracted from causes alone (requires testing.) Likewise, causes cannot be extracted from data alone. No causes in; no causes out.
+		- What is causal inference?
+			- More of an association between variables
+			- "Causal inference" is prediction of intervention
+				- Knowing a cause means being able to predict the consequence s of an intervention by that cause.	
+				- Ex. tree swaying outside in the wind is caused by wind. The two are associated and one can cause the other, but we're usually sure it's the wind causing the swaying.
+			- "Causal imputation" is imputation of missing observations
+				- What does this mean? Knowing a cause lets you ask "what if xyz was done differently?" (construct unobserved counterfactual outcomes)
+			- Causal inference is related to description (of population) and design (of project)
+				- These all rely on some scientific model
+- DAGs (Directic Acyclic Graphs)
+	- Essentially highly abstracted causal models - the only info in a DAG are variables and one-way causal relationships.
+	- All a DAG defines is relationships - no more, no less. Used to clarify thinking.
+	- Analyze this to produce appropriate statistical models.
+	- "What can we decide, without additional assumptions?"
+	- See video example
+		- X -> Y
+		- C -> X, Y
+		- A -> C, X
+		- B -> C, Y
+		- X influences Y, which is what we want to test. Other variables influence these, though.
+			- X and B are competing causes of Y
+			- A is an influence of the treatment X
+			- C is a common cause of X and Y - a compound to control for
+	- DAGs let us ask questions and consider different models
+		- Which control variables? DONT ADD EVERYTHING
+		- How do we test and refine the causal model?
+	- Also, they let us focus more on science rather than data
+- Golems
+	- The course's name for statistical models
+	- Named after golem of Judaism. It's a hollow puppet that performs a purpose regardless of intent.
+		- Likewise, statistical models have no inherent purpose.
+		- They are also powerful, intent-agnostic, and dangerous
+	- Quick rant about frequentist statistical models
+		- Incredibly limiting
+		- Focus on rejecting null hypothesis
+		- Relationship between research and test unclear
+		- Industrial framework
+		- "Follow the flowchart" approach not ideal
+	- Lots of studies revolve around complex systems - null models are rarely not feasible
+		- Null pop. dynamics?
+		- Null phylogeny?
+		- Null social network?
+		- Problem: many processes produce similar distributions
+	- Example: how does DNA evolve? Neutral evolution vs. selection?
+		- The two hypotheses lead to distinct process models, but overlapping statistical models
+	- We're going to start with DAGs, turn them into generative causal models, then write statistical models to analyze synthetic data, then introduce real data.
+		- Start with abstracted view
+		- Generate synthetic data based on our abstracted DAG view
+		- Write statistical models to analyze synthetic data
+		- Use statistical models on real data
+			- Like training an ML model!
+	- General process:
+		- Make a DAG, select "adjustment set" (relevant variables)
+		- Need generative model of causal model to design/debug our code
+		- Need a strategy to derive estimate and uncertainty from finite data
+			- Easiest approach: bayesian data analysis. It's easiest to use because Bayesian models are generative - simulate the data yourself
+- Owls
+	- Common joke - step 1 is draw circles, step 2 is draw the rest of the owl
+		- But sometimes it feels like this when teaching computational materials
+	- We're interested in documenting our workflow.
+		- Understand what you're doing
+		- Reduce error, allow others to analyze your work better and find problems.
+		- Respectable scientific workflow
+	- 1) Theoretical estimand - what are we even doing in the study?
+	- 2) Scientific (causal) model(s) - start as a DAG, but needs to end up being generative.
+	- 3) Use (1) and (2) to build statistical models
+	- 4) Simulate from (2) to valdiate that (3) yields (1)
+	- 5) Analyze real data
+
+
+02 - GARDEN OF FORKING DATA - https://www.youtube.com/watch?v=R1vcdhPBlXA
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Imagine you're trying to model the proportion of land to water on the surface of the earth.
+	- We can estimate this by using a model globe and tossing it, then seeing which type of surface (land/water) lands upright. Eventually, this should converge on the proportion.
+- Here's our general workflow.
+- 1) Define generative model of the sample
+	- Start with DAG style - how do variables work with one another?
+		- Which variables are we even working with?
+			- p - proportion of water (our goal to figure this out)
+			- n - number of tosses
+			- l - number of land observations
+			- w - number of water observations
+	- n influences W and L - the more tosses you do, the values increase/decrease.
+	- p influences W and L - as the proportion changes, the number of W/L changes.
+		- Intervening on one of these values will influence the values of W and L
+	- To make this generative, we need to define some function. W,L = f(p, n)
+		- This can be really any function you want, but it needs to reflect the scientific scenario.
+- 2) Define a specific estimand
+	- The globe being tossed is our estimand
+- 3) Design a statistical way to produce estimate
+	- Bayesian data analysis - simple, humble way to do this.
+	- "For each possible explanation of the sample (proportion of water), count all the ways the sample could happen."
+	- "Explanations with more ways to produce the sample are more plausible."
+	- Imagine a garden of forking paths. There's many datasets that can arise - think about all the different ways things can happen and certain decision points.
+		- Ex. doing infinite datasets of the globe's infinite proportion in infinite tosses would be tough. Instead, let's do a 4 sided die and toss it 3 times for WLW.
+		- For a D4 globe with fully covered sides, there's 5 possible globes (representing a abstracted subset of the real globe's proportion.)
+			- LLLL
+			- WLLL
+			- WWLL
+			- WWWL
+			- WWWW
+		- For each example proportion of W:L, find how many ways our given sample could arise.
+			- Globe	 W | L | W
+			- LLLL - 0 * 4 * 0 = 0 ways (there were 2 W in sample)
+			- WLLL - 1 * 3 * 1 = 3 ways
+			- WWLL - 2 * 2 * 2 = 8 ways
+			- WWWL - 3 * 1 * 3 = 9 ways
+			- WWWW - 4 * 0 * 4 = 0 ways (there was 1 L in sample)
+				- See Forking Path diagram in video - useful to visualize
+		- We can see that WWWL has more ways to produce - but the sample isn't very large, so there isn't much support to claim that the glopbe is WWWL.
+			- This is a good feature of an estimator - not overconfident in small samples
+		- We just produced a Bayesian analysis!
+		- Now, let's do some Bayesian updating. Increase the size of the sample (roll again), so we now work with WLWW.
+			- We can just multiply our values by the number of ways that the new sample can happen.
+			- Globe	 WLW | W
+			- LLLL - 0   * 0 = 0 ways
+			- WLLL - 3   * 1 = 3 ways
+			- WWLL - 8   * 2 = 16 ways
+			- WWWL - 9   * 3 = 27 ways
+			- WWWW - 0   * 4 = 0 ways
+		- We can see the values starting to seperate a bit.
+		- What about larger samples, like WLWWWLWLW? How can we express this mathematically?
+			- Globe	 W | L | W | W | W | L | W | L | W
+			- LLLL - 0 * 4 * 0 * 0 * 0 * 4 * 0 * 4 * 0 = 0^6 * 4^3 = 0 ways
+			- WLLL - 1 * 3 * 1 * 1 * 1 * 3 * 1 * 3 * 1 = 1^6 * 3^3 = 27 ways
+			- WWLL - 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 = 2^6 * 2^3 = 512 ways
+			- WWWL - 3 * 1 * 3 * 3 * 3 * 1 * 3 * 1 * 3 = 3^6 * 1^3 = 729 ways 
+			- WWWW - 4 * 0 * 4 * 4 * 4 * 0 * 4 * 0 * 4 = 4^6 * 0^3 = 0 ways
+		- So our equation is W,L = (4p)^w * (4-4p)^l
+		- As our samples start to get larger, the numbers of ways that things can happen will also increase exponentially. Better to convert it to probability.
+			- How do we do this? Simple. Add all the possibilities up, then divide each possibility value by the total to get the percentage.
+			- This collection of (proportion) probabilities is called the "posterier distribution"
+- 4) Test (3) using (1)
+	- At this point, we have designed an optimal Bayesian estimator (if the model is correct.)
+		- What does this mean? So long as our generative model is correct/representative of real data, our estimates for likelihoods of p are optimal given generated data.
+	- We want to test before we estimate and summarize.
+		- 1) Code a generative simulation
+		- 2) Code an estimator
+		- 3) Test (2) with (1)
+	- We can do 4-sided globe, 10-sided, 20-sided, etc.
+		- But we can't do infinite-sided. This is the limitation. So how do we get our maximum?
+		- Let's think about it logically.
+		- The globe is a polyhedron with infinite sides
+		- The posterior probability of any "side" p being water is proportional to:
+			- (p^w)((1-p)^l) 
+		- Now, all we need to do is normalize this and we get our Beta distribution - a single continuous function, instead of lines.
+			- Beta distribution made up of of normalizing constant * relative number of ways to observe sample.
+				- In this case, relative number of ways to observe sample is the function we calculated earlier - (p^w)((1-p)^l)
+				- We then normalize this value to turn it into a probability in correspondence to the total number of possibilities.
+					- Shape of the curve doesn't depend upon the normalizer at all. That's all chosen by our original function - normalizer just normalizes.
+				- Beta distribution normalizes to density - 0.0 upward
+				- Forms a curve when graphed. This curve starts to narrow and become higher as more samples as we update
+	- A few lessons
+		- 1) There's no minimum sample size. This is good, but unlike frequentist probability practices. Bayesian estimators work with small samples - it's just gonna be a pretty flat curve.
+		- 2) Shape embodies sample size. This is really nice - we update the shape of the post. dist. when updating the samples. Also, see above.
+		- 3) No point estimate. Use the whole distribution every time. Don't use mean/mode/whatever - the whole distribution, or a subset range of it, is relevant. THE DISTRIBUTION IS THE ESTIMATE.
+		- 4) No one true interval. Intervals communicate shape of posterior, but the choice is pretty much arbitrary.
+- 5) Analyze real sample, summarize
+	- Now that we have our posterior distribution (a type of estimate), now what?
+	- If you can do a single calculation on one point (proportion in this case), you can and must do it to every point as you randomly sample to create a new doistribution.
+		- But to do this, we need to sample from the posterior distribution.
+			- Usually, this requires integral calculus. Thankfully, we can approximate by sampling from the beta distribution. 
+	- Video example: sample from posterior distribution. Then simulate the sampling again. Then plot. This makes a curve that accounts for uncertainty.
+	- Sampling is fun and easy!
+		- Sample from posterior, compute desired quantity for each sample, profit. Much easier than doing integrals.
+		- Turn calculus problem into a data summary problem!
+		- Markov Chain Monte Carlo (MCMC) produces only samples, anyways
+- Notes on "Bayesian Modesty"
+	- No guarantees except logical
+	- Probability theory is a method of logically deducing implications of data under assumptions of your choice.
+
+03 - GEOCENTRIC MODELS
+~~~~~~~~~~~~~~~~~~~~~~
+
+- Last time, we introduced basic logic of Bayesian inference
+- This time, we're talking about expanding our Bayesian logic
+- Example given - to explain Mars apparently "wandering", the geocentric model of the solar system was introduced
+	- This worked well to predict the way that Mars would appear, but didn't really capture the mechanics of the solar system
+	- Gauss took a stab at making a solar model and came up with normal error and least-squares estimation
+		- We typically call his error distribution the "Gaussian distribution"
+- This brings us to the topic of linear regressions
+	- Like geocentric model, they describe associations and make predictions, but mechanistically wrong.
+		- The universe is not comprised of perfect linear relationships. 
+ 		- The geocentric model is not inherently useless - it's just not a good generative model to represent the solar system. Good for planetariums, tho.
+			- Linear regressions are powerful golems, but need appropriate usage
+	- Lin. reg. is Gaussian by nature. We will use the Gaussian error model. 
+		- Gauss defined very general conditions for how error creeps into observations
+		- Gaussian distribution - there's a bunch of little errors that get added together
+		- Ex. football field with lots of people on a line, heads = move right, tails = move left 
+			- Over time, this will resemble a Gaussian distribution.
+			- Why? Why do natural forces attract Gaussian (normal) distributions?
+				- Fluctiations generally add and result to the more possible outcome.
+				- Ex. more ways for people to end up in the middle than there are for people to end up far away.
+- Two main arguments for why Gaussian (normal) distributions emerge
+	- Generative - summed fluctuations tend towards normal distribution
+	- Inferential - for estimating mean and variance, Gaussian distribution is least informative.
+		- Often the best - all it does is give us a mean and variance. No more, no less.
+		- A variable doesn't need to be normally distributed for normal model to be useful. It's a machine for estimating mean/variance.
+- Remember our workflow. Let's update it.
+	- 1) State a clear question/goal/estimand
+	- 2) Sketch causal assumptions. Scientific model.
+	- 3) Use the sketch (2) to define a generative model
+	- 4) Use generative model (3) to build an estimator
+	- 5) Validate model. Go back to (2) and start from there again if needed.
+	- 6) Analyze real data.
+- Ex. height vs. weight measurements
+	- 1) State a clear question/goal/estimand
+		- Describe association between weight and height
+		- Make sure to state assumptions. We're only looking at adult weight/height 
+	- 2) Sketch causal assumptions. Scientific model.
+		- H -> W
+			- Can also write this as W = f(H)
+			- "Weight is some function of height"
+			- We can quickly speculate about our generative model
+				- Dynamic - incremental growth of organism, both H and W derive from growth pattern, Guassian variation result of summed fluctutations
+				- Static - changes in height = changes in weight, but no mechanism. Gaussian variation result of growth history
+		- But what about uncertainty? H -> W, U -> W
+			- W = f(H, U)
+	- 3) Use the sketch (2) to define a generative model
+		- Start simple - W = Beta * H + U
+			- "Weight is some proporion of H plus some uncertain factor"	
+		- Let's also introduce some good conventions. When describing models...
+			- List the variables 
+			- Define each variable as a determninistic or distributional function of the other variables
+		- So let's describe our variables now. i is the index for a single data point, = is "deterministic" and ~ is "distributed as"
+			- Wi = Beta * Hi + Ui
+			- Hi ~ Normal(0, sigma)
+			- Ui ~ Uniform (130, 170)
+			- Describe in this order with words, but for code, you need to describe the small components before your general statement.
+	- 4) Use generative model (3) to build an estimator
+		- When we build our stat. model, we're going to use some stuff that wasn't used in the generative model, since they don't typically follow the same shape. 	
+			- Remember, this is a linear regression. The process is like last time with the globe, only now, we're converging on the parameters for a lin. reg. instead of a proportion of globe.
+			- We'll make our statement for Bayesian updating our priors. For now, let's first define the statistical model.
+				- E(Wi|Hi) = alpha + beta * Hi
+					- "Our estimate for Wi given Hi is intercept alpha plus slope beta times Hi
+					- Wi = average weight conditional on height
+			- So what's our posterior? Remember, we're trying to find distributions for a specific line. 
+				- Alpha and beta define the line for a specific data point (expected weight for each height)
+				- Pr(alpha, beta, sigma | Hi, Wi) = (Pr(Wi | Hi, alpha, beta, sigma) * Pr(alpha, beta, sigma))/Z
+					- Break this down intosmaller parts. What does this yucky statement even mean?
+					- Pr(alpha, beta, sigma | Hi, Wi) -> We are trying to find a multivariable posterior distribution.
+						- Post. dist. = the only estimator in Bayesian inference
+						- In the past, we estimated the posterior distribution of the proportion of water to land.
+							- This took our previous distribution and multiplied each proportion by the relative number of ways to achieve the new sample.
+							- With WLW and a new W observation, It was (WLW possibilities) * (new possibilities to get W per each proportion
+						- Now, we're taking multiple previous distributions and multiplying them by the new number of ways to achieve our 
+		- Let's talk about priors real quick.
+			- When doing the globe example, we started with 2 W and 1 L. We know that there's water and land on the globe, so our starting sample reflects reality already.
+			- What about when we start from scratch? We need some value to start at - or rather, a distribution. Up to you to choose.
+			
