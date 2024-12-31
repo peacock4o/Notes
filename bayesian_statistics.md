@@ -4,9 +4,9 @@ bayesian_statistics
 - Tags: 
 - Created: 2024-12-20T18:05:42-08:00
 
-# 01 - GOLEM OF PRAGUE
+# **01 - GOLEM OF PRAGUE**
+
 ``https://www.youtube.com/watch?v=FdnMWdICdRs``
-===================
 - Thinking about how science influences statistics (an applied form of mathematics)
 - Bayesian inference vs. frequentism is a common debate in stats courses
 	- Won't discuss it though. Looking at causal inference instead. Bayesian debate is mostly settled
