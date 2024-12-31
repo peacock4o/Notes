@@ -3,9 +3,9 @@ bayesian_statistics
 - Category: Learning
 - Tags: 
 - Created: 2024-12-20T18:05:42-08:00
-
-01 - GOLEM OF PRAGUE - https://www.youtube.com/watch?v=FdnMWdICdRs
-~~~~~~~~~~~~~~~~~~~~
+====================
+# 01 - GOLEM OF PRAGUE - ``https://www.youtube.com/watch?v=FdnMWdICdRs``
+====================
 - Thinking about how science influences statistics (an applied form of mathematics)
 - Bayesian inference vs. frequentism is a common debate in stats courses
 	- Won't discuss it though. Looking at causal inference instead. Bayesian debate is mostly settled
@@ -82,9 +82,9 @@ bayesian_statistics
 	- 4) Simulate from (2) to valdiate that (3) yields (1)
 	- 5) Analyze real data
 
-
-02 - GARDEN OF FORKING DATA - https://www.youtube.com/watch?v=R1vcdhPBlXA
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===========================
+# 02 - GARDEN OF FORKING DATA - ``https://www.youtube.com/watch?v=R1vcdhPBlXA``
+===========================
 
 - Imagine you're trying to model the proportion of land to water on the surface of the earth.
 	- We can estimate this by using a model globe and tossing it, then seeing which type of surface (land/water) lands upright. Eventually, this should converge on the proportion.
@@ -185,8 +185,9 @@ bayesian_statistics
 	- No guarantees except logical
 	- Probability theory is a method of logically deducing implications of data under assumptions of your choice.
 
-03 - GEOCENTRIC MODELS
-~~~~~~~~~~~~~~~~~~~~~~
+======================
+# 03 - GEOCENTRIC MODELS - ``https://www.youtube.com/watch?v=tNOu-SEacNU``
+======================
 
 - Last time, we introduced basic logic of Bayesian inference
 - This time, we're talking about expanding our Bayesian logic
