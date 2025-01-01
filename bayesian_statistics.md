@@ -263,4 +263,12 @@ bayesian_statistics
 		- Let's talk about priors real quick.
 			- When doing the globe example, we started with 2 W and 1 L. We know that there's water and land on the globe, so our starting sample reflects reality already.
 			- What about when we start from scratch? We need some value to start at - or rather, a distribution. Up to you to choose.
-			
+- At this point, I must be honest - I'm confusing myself a bit. So let's go from the beginning and take it slowly.
+	- 1) State a clear question/goal/estimand
+		- We want to describe the association between weight and height.
+		- We're only looking at adult weight and height, so filter for any data points over the age of 18.
+	- 2) Sketch causal assumptions. Scientific model.
+		- In our globe example, there was one unobserved variable - the proportion of water to surface on the globe. This influenced the number of W/L observations. 
+			- Now, we've got height influencing weight, but we've also got some other factors that we don't know about.
+			- We'll call height H and the unclear stuff U. Our predictor function is loosely defined as ``W = f(H, U)`` 
+			- Looking at the data, we can also kind of see a linear relationship, so we'll model a linear regression.
