@@ -271,4 +271,51 @@ bayesian_statistics
 		- In our globe example, there was one unobserved variable - the proportion of water to surface on the globe. This influenced the number of W/L observations. 
 			- Now, we've got height influencing weight, but we've also got some other factors that we don't know about.
 			- We'll call height H and the unclear stuff U. Our predictor function is loosely defined as ``W = f(H, U)`` 
-			- Looking at the data, we can also kind of see a linear relationship, so we'll model a linear regression.
+	- 3) Use the sketch (2) to define a generative model
+		- Looking at the data, we can also kind of see a linear relationship, so we'll model a linear regression.
+			- The real equation probably looks something like W = beta * H + U
+			- Let's also define what our variables will look like. Some variables are "random" (from a given distribution), some variables are deterministic functions of others 
+				- ``Wi = B*Hi + Ui`` -> W is a function of other variables. Wi = beta(slope) * Hi + Ui
+				- ``Ui ~ Normal(0,sigma)`` -> Ui is a normal distribution. **at least when we're generating.**
+				- ``Hi ~ Uniform(130, 170)`` -> Hi is a uniform distribution from lower height to higher height
+				- Beta is the slope that we're trying to estimate. Hi is observed. We don't give beta a value until we set priors.
+	- 4) Use generative model (3) to build an estimator
+		- Our estimator is going to resemble our previous generator. This time, however, we're trying to find certain unobserved values. Beta and Ui (alpha) were unobserved, 
+			- ``E(Wi | Hi) = alpha + beta * Hi`` -> Read as "our estimate of Wi given Hi follows the following function:"
+				- **KEY IDEA:** Our estimator is the final product. We're trying to complete the estimator using posterior distributions. 
+		- Now we need to build our posterior distribution.
+			- A couple things are different this time, though
+				- We're doing a multivariable posterior distribution. It's still one distribution, but you can think of it as multiple one-variable distributions. Kind of.
+				- Take a look at the equation in the video at ``38:30``
+					- The left hand side is the posterior probability of a given line (as in the aforementioned multivariable distribution)
+					- The left hand numerator on the right hand side is our "garden of forking data" - number of ways to get our 
+					- The right hand numerator on the right hand side is our prior - previous posterior distribution
+					- Z is our normalizing constant. Don't worry about it for now. In fact, you can kind of think of the numerator alone as the "number of ways the line could happen" like previously
+						- Posterior = prior * number of new ways for sample to arise / normalizing constant
+				- Normally, we don't write it like this. We can predict that Wi will converge on Gaussian
+					- We write it as Wi ~ Normal(mu sub i, sigma), where mu sub i = alpha + beta * Hi. **This is our statistical model** that we're trying to posterior distribution-ify.
+		- Choosing priors
+			- We need to start with something when we have no priors. So we'll choose distributions based on what's scientifically justifiable. Up to preference.
+				- Choose your priors *softly*. Weight generally goes up with height, when W=0 H=0, etc.
+			- Think about our statistical model. Wi ~ Normal(mu sub i, sigma), where mu sub i = alpha + beta * H
+				- Choose a prior for alpha, beta, and sigma. These are the unobserved values that we're making a distribution for.
+			- Priors matter a lot in complex models. For simple models that can correct themselves weasily, not as much.
+
+## **04 - CATEGORIES AND CURVES**
+
+``https://www.youtube.com/watch?v=F0N4b7K_iYQ``
+- Short review
+	- The geocentric model was an example where it produced good results but wasnt representative of the actual mechanics
+	- Kind of similar to the linear regression. Useful to model things that aren't necessarily linear in nature
+		- McElreath states it well - a "statistical scaffold" - used to get at statistical estimand, but need to design the linreg with an external, non-linear model in mind.
+		- Like the geocentric model, linreg can approximate anything! So we need to design it with a specific owl in mind
+- What's new in this lesson?
+	- 1) How we draw the statistical models
+		- When we have multiple estimatands, it's useful to use multiple estimators.
+		- This is why it's important to make a good generator.  
+	- 2) How we process the results
+		- Often, the estimate we want is not going to show up directly in a table.
+		- Need to postprocess multiple values from the posterior distribution.
+- Categories and curves (he said the thing!)
+	- Linear models can sometimes do extralinear (curved) things.
+		- Doesn't mean linear models are obsolete - just gotta 
