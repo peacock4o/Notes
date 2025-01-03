@@ -8,7 +8,9 @@ ocaml
 
 ## Types and values
 
-Try using utop for a CLI.
+utop is a good CLI tool for OCaml. We'll use it for a number of examples.
+
+When we write a line in OCaml toplevel, we end it with ``;;``
 
 Example:
 
@@ -16,17 +18,15 @@ Example:
 42;; (;; to end the expression)
 	- : int = 42
 ```
+In the above statement,
+- ``-`` indicates value not assigned
+- ``int`` = type 
+- ``42`` = value
+
+We can assign variables with a ```let``` definition
 
 ```ocaml
-42 = value
-int = value type
-- = value not given a name
-```
-
-We can bind values to names with a ```let``` definition
-
-```ocaml
-let x = 42
+let x = 42;;
 	val x : int = 42
 ```
 
@@ -34,26 +34,26 @@ Think of this as "x has type int and equals 42"
 
 ## Functions
 
-We can define functions in this way as well. 
+We can define functions in this way as well
 
 ```ocaml
-let increment x = x + 1
+let increment x = x + 1;;
 	val increment : int -> int = <fun>
 ```
 
-Follow the same "pronunciation" structure as a variable. 
+It's like a variable! Follow the same "pronunciation" structure as a variable. 
 "increment has type int input to int output and equals this (unprintable) function represented with <fun>"
 
-Think of the arrow as a "transformation" (or function, more intuitively)
+Think of the arrow as a transformation of the input into the output
 
 Now, what are the different ways we can call this function?
 
 ```ocaml
-increment 0
+increment 0;;
 	- : int = 1
-increment(21)
+increment(21);;
 	- : int = 22
-increment(increment 5)
+increment(increment 5);;
 	- : int = 7
 ```
 
