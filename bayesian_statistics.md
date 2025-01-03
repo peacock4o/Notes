@@ -299,7 +299,7 @@ bayesian_statistics
 				- Choose your priors *softly*. Weight generally goes up with height, when W=0 H=0, etc.
 			- Think about our statistical model. Wi ~ Normal(mu sub i, sigma), where mu sub i = alpha + beta * H
 				- Choose a prior for alpha, beta, and sigma. These are the unobserved values that we're making a distribution for.
-			- Priors matter a lot in complex models. For simple models that can correct themselves weasily, not as much.
+			- Priors matter a lot in complex models. For simple models that can correct themselves easily, not as much.
 
 ## **04 - CATEGORIES AND CURVES**
 
@@ -316,6 +316,81 @@ bayesian_statistics
 	- 2) How we process the results
 		- Often, the estimate we want is not going to show up directly in a table.
 		- Need to postprocess multiple values from the posterior distribution.
-- Categories and curves (he said the thing!)
-	- Linear models can sometimes do extralinear (curved) things.
-		- Doesn't mean linear models are obsolete - just gotta 
+- What are the new tools introduced in this lesson?
+	- Categories
+		- As in categorical variables
+		- Usually show up as indicators or index variables
+	- Curves
+		- Linear models can sometimes do extralinear (curved) things.
+		- Doesn't mean linear models are obsolete - linear models can handle both
+- Categories
+	- Lots of causes that are not continuous - categories are discrete, unordered types
+	- How do we get around this? Ideally, we want to fit a seperate line (unique distribution) for each category
+	- Imagine that we're back in our adult height/weight test. What if we have a data value for male vs. female in each?
+		- FIRST! Add it to our DAG. 
+			- Before: 	``H -> W``
+			- Now: 		``H -> W and S -> H, W``
+			- Think: how are H, W, and S causally related? How are they statistically related?
+				- Important to ask these questions. If we look at the data, it's not clear whether ``H -> W`` or ``W -> H``, only that there's some relationship.
+					- We know scientifically that gaining weight doesn't make you taller. But looking at only data doesn't support this.
+				- Interesting note - sex influences weight in two ways - directly, and indirectly (through height.) Remember that there's more than one source of influence.
+			- ``H = f sub H (S)`` - "H is a function of S"
+			- ``W = f sub W (H, S)`` - "W is a function of H and S"
+			- Notice that we don't necessaily *have* to write out the unobserved influences U. Generally it's implied, although you'll want to write out these influences if they're shared.
+				- See turtle and lizard example. ``T -> S``, but ``T -> W`` (think food availability, levels of fat storage, etc.)
+					- We know it's a compound, so it's not safe to ignore the temperature anymore
+		- Think about how we're going to add this to our program
+			- Depending on the sex value, use different generator stats and priors.
+			- Can use indicator variables (bool for each option) or index variables (one int with multiple values)
+				- Natural to see which of these is better coding style. Also better for specifying unique priors and extension to multi-level models
+				- Ex. if we want to do color categories, unordered set alpha comprises of ``[a1, a2, ..., ai]`` where each value is a color.
+				- Then, when selecting variables, choose from an array for whatever value you want based on the index value of given alpha
+				- Ex. ``S[i]`` corresponds to the sex of the i-th person. For person i, we get their index (corresponding to sex category), then get our variable (in this case, intercept alpha)
+				- If you use indicator variables, one value becomes the "default" and others become "adjustments" as opposed to everything being on the same field from the getgo.
+			- We can find the difference through generative testing. Create data sets with simulated people for each prior and compare the mean weights.
+		- We have our posterior distributions. Now what?
+			- Remember - posterior distribution is for the average weight. For predicted weights, we need to include standard deviation into our distribution for the posterior predicted weights.
+		- We're looking for the difference in posterior distributions, not in the means. So we need to find the difference in distributions. Need to compute contrast!
+			- Never legitimate to compare overlap in distributions. You can't tell if things are different or the same based on distribution overlaps.
+			- Must compute the **contrast distribution**. This is the actual scientific estimate we're after.
+		- What about individual people? (Not the average of infinite people)
+			- Take a large number of samples from both predicted posteriors, then take the difference between those two groups.
+				- Think of it like so - sample a man and a woman. Find the difference in weight. Do this again and again, n times. This forms a distribution.
+				- Negative value indicates woman is heavier than man because the difference is man - woman in weight.
+	- This was the causal effect of S on W. Now, how about the direct causal effect of S on W? (Note: this is a distributional estimate)
+		- Direct effect = How ONLY sex affects weight. No indirect influence through height - we need to "block" association through H. This means stratify by H.
+		- Achieve this by "centering" H - instead of ``mu sub i = alpha + beta * H``, we subtract the average height from our observed height.
+			- Makes it so alpha is the average weight of a person with average height
+			- With the men and women example, this shows us that the slopes are nearly the same (but not identical!)
+		- Then, for each height, simulate individuals and look at the difference in simulated weights. This gives us a posterior distribution in expected weight difference for each height.
+			- This gives us the bow tie shape in the video. That's our direct causal effect.
+- Curves
+	- Not all data is linear. A lot of it can be curved.
+	- Like if you look at the data for the full human lifespan, ``H -> W`` is clearly not linear
+	- Linear models can easily fit curves, but it's not mechanistically representative.
+		- But we knew linreg was like that already. Just have to use it wisely.
+	- Technically, 	the model is still linear because it's an additive function of parameters
+	- Two popular strategies of fitting curves
+		- 1) Polynomials. "Awful."
+			- Mu sub i = alpha + beta sub 1 * x sub i + beta sub 2 * x sub i
+			- Lots of symmetries that are undesirable. Not scientifically reasonable.
+			- Lots of "explosive uncertainty" at the edges
+				- See video example for this. There's a little bit at each end of the curve which isn't scientifically justified.
+			- Polynomials don't "smooth" the curve locally (don't determine the curve by looking at the curve in dense regions) - only global (accounting for EVERY point)
+			- Parabolas **must** curve, and so they do - even when there isn't a very clearly supported fit and something else would do better
+				- See video example - a curve fits the data perfectly, but it's not very clearly mechanistically approrpriate.
+				- Lots of assumptions are made with a polynomial model that are undesired
+		- 2) Splines and generalized additive models. "Less awful."
+			- Splines are built from many local functions, then smoothed together to make a single function.
+			- Linear models but with some "synthetic variables" (??? sound scary)
+			- ``mu sub i = alpha + w1Bsubi,1 + w2Bi,2 + w3Bi,3``
+				- ``w`` is the weight of each point. "Like slopes."
+				- B is a "spline shape" - synthetic, choose this to determine shape in a particular region.
+					- Think of this as a coordinate on the x axis. "B values turn on weights in different regions"
+			- Think of multiple "basis functions" adding up to give you a y value.
+				- Can make very non-linear functions from linear pieces
+			- Adding scientific information helps.
+				- Ex. Average weight only increases with height, height increases but levels off with height, etc.
+			- Ideally, statistical models have some form as a scientific model, which splines do.
+				- Ex. Think phases of human growth. Infancy, childhood, puberty, adulthood all have different growth behaviors
+		
