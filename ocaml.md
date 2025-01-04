@@ -375,4 +375,24 @@ val x : int = 22
 - : int = 42  (* x did not mutate! *)
 ```
 
+Why does this happen? IDK, honestly. I think it's because ``f`` was defined when ``x = 42`` was in scope. We don't pass the new value of ``x`` to ``f`` in the second evaluation, so it uses the one in the same scope.
+- Actually, it's because the second ``x`` is beyond the scope of ``f``
 
+## Type Annotations
+
+Sometimes, it can be useful to manually specify the desired type of an expression. A *type annotation* does that.
+- ``(5 : int)`` -> "5 has type int"
+- ``(5 : float)`` causes a compile-time error because it's not the right type. Remember - OCaml is strict!
+	- This makes it useful for debugging. 
+		- Imagine you have ``5 +. 1.1`` (wrong because 5 should be a float)
+		- You could check by annotating 5 as a float. ``(5 : float) +. 1.1`` would cause a compile-time error as previously mentioned.
+
+Annotations are **NOT** type casts. They're just a check that an expression actually *is* a given type.
+
+- Syntax
+	- ``(e : t)``
+		- Unlike other examples, parenthesis are actually required
+- Dynamic semantics
+	- No run-time meaning for a type annotation - it only exists to be useful in compiler-land. ``(e : t)`` compiles down to ``e``
+- Static semantics
+	- If ``e`` has type ``t`` then ``(e : t)`` has type ``t``
