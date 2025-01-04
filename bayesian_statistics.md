@@ -394,3 +394,24 @@ bayesian_statistics
 			- Ideally, statistical models have some form as a scientific model, which splines do.
 				- Ex. Think phases of human growth. Infancy, childhood, puberty, adulthood all have different growth behaviors
 		
+## **05 - ELEMENTAL CONFOUNDS**
+
+``https://www.youtube.com/watch?v=mBEA7PKDmiY``
+- Certain variables can be correlated with one another without one causing the other. 
+- There's four of "ye olde elemental confounds" that we'll look at
+	- 1) "The Fork"
+		- ``X <- Z -> Y``
+		- Where Z is a "common cause"
+		- X and Y are associated. 
+			- Could say that Y "is not independent of" X. This is indicated by the upside down T with a line through it.
+			- If you know Y or X, you know something about the other one.
+		- Once stratified by Z, there's no association.
+			- Meaning that X and Y *are* independent for each (shared) level of Z. 
+			- Write this as ``Y (upside down T) X | Z``
+		- Ex. Why do regions of the USA with higher rates of marriage also have higher rates of divorce?
+	- 2) "The Pipe"
+		- ``X -> Y -> Z``
+	- 3) "The Collider"
+		- ``X -> Z <- Y``
+	- 4) "The Descendant"
+		- ``X -> Z -> Y,A``
