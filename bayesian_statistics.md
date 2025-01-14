@@ -383,7 +383,7 @@ bayesian_statistics
 		- 2) Splines and generalized additive models. "Less awful."
 			- Splines are built from many local functions, then smoothed together to make a single function.
 			- Linear models but with some "synthetic variables" (??? sound scary)
-			- ``mu sub i = alpha + w1Bsubi,1 + w2Bi,2 + w3Bi,3``
+			- $\mu_i = \alpha + w_1\beta_i,1 + w_2\beta_i,2 + w_3\beta_i,3 + ...$
 				- ``w`` is the weight of each point. "Like slopes."
 				- B is a "spline shape" - synthetic, choose this to determine shape in a particular region.
 					- Think of this as a coordinate on the x axis. "B values turn on weights in different regions"
