@@ -5,7 +5,6 @@ my_links
 - Created: 2025-01-13T17:58:35-08:00
 
 ## Cryptography
-- ````
 - ``https://rdi.berkeley.edu/zk-learning/``
 	- ZKPs - long term!
 
@@ -44,14 +43,18 @@ my_links
 	- Currently on Section ``2.1``
 
 ## Psychology + Decision Making
-- ``https://www.cmu.edu/dietrich/sds/ddmlab/papers/Lejarragaetal2011.pdf``
-	- 
+- ``https://www.cmu.edu/dietrich/sds/ddmlab/papers/Lejarragaetal2011.pdf`` 
 - ``https://arxiv.org/pdf/2111.10268``
 	- SpeedyIBL
 - ``https://www.sciencedirect.com/science/article/abs/pii/S0364021303000314``
 	- Introducing IBLT
 
+## Rust
+
 ## Statistics/Probability
+
+- ``https://projects.iq.harvard.edu/stat110/home``
+	- Harvard Stats 110
 
 ### Bayesian XYZ
 
