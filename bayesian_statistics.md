@@ -398,17 +398,35 @@ bayesian_statistics
 
 ``https://www.youtube.com/watch?v=mBEA7PKDmiY``
 - Certain variables can be correlated with one another without one causing the other. 
+- Reminder: Direction of course
+	- We have an estimand - parameter being estimated.
+	- To make this, we need an estimator - our "set of instructions on how to assemble ingredients (parameters)"
+	- This estimator produces an "estimate"
+		- Sometimes, the estimate is inaccurate because things happen during the recipe.
+		- Good statistical recipes of parameters must defend against confounding.
 - There's four of "ye olde elemental confounds" that we'll look at
 	- 1) "The Fork"
 		- ``X <- Z -> Y``
 		- Where Z is a "common cause"
-		- X and Y are associated. 
+		- When observing X and Y, they appear associated. 
 			- Could say that Y "is not independent of" X. This is indicated by the upside down T with a line through it.
 			- If you know Y or X, you know something about the other one.
 		- Once stratified by Z, there's no association.
 			- Meaning that X and Y *are* independent for each (shared) level of Z. 
 			- Write this as ``Y (upside down T) X | Z``
+			- Simulate Z first, then simulate X and Y based off Z - maybe offset by a coefficient of Z.
+			- Sample Z with Bernoulli trials, then generate X and Y seperately with norm distributions. See discrete/continuous examples.
 		- Ex. Why do regions of the USA with higher rates of marriage also have higher rates of divorce?
+			- Estimand: Causal effect of marriage rate on divorce rate
+			- Scientific model
+				- Also heavily related: median age of marriage. We have some data regarding that as well.
+				- Scientifically, we know that age of marriage has some effect on both marriage rates and divorce rates. ``M <- A -> D``
+					- Break the fork by stratifying by A. We need to break the fork to estimate the causal effect of M on D.
+					- How do we do this, actually? It's easy where A is discrete (like with Z being {0, 1} in the last example), but it's harder when A is continuous
+					- It's the same, really. For every value of A, we look at the assocation between M and D. We just need a continuous function to tell us the output.
+			- Statistical model
+				- $\mu_i=\alpha+\beta_M * M_i + \beta_A * A_i$
+			- Analyze
 	- 2) "The Pipe"
 		- ``X -> Y -> Z``
 	- 3) "The Collider"
