@@ -473,9 +473,42 @@ bayesian_statistics
 			- Scientific model in abstract form
 				- ``F, H0 -> H1`` - "The initial plant height and amount of fungus influences the final plant height after treatment/growth"
 				- ``T -> F, H1`` - "The treatment has some effect on the amount of fungus and on the final plant height (positive or negative)"
-			- Our estimand is the *total* causal effect* of the 
+			- Our estimand is the *total* causal effect* of T. Remember that T -> F -> H1 is a pipe. SHould we stratify by F? NO! That would block the pipe.
+				- If you're looking for direct effect, remove it.
+			- ^ Simplest example of "post-treatment bias." Researchers ruin their experiments during the analysis phase - not during the treatment phase.
+				- Done by stratifying by a consequence of the treatment. Makes it seem as though treatment is unrelated to consequence, resembling more of the Fork. Or otherwise misleading.
+				- Consequences of treatment should not usually be included in the estimator (imperfect rule of thumb)
+				- Posttreatment bias isn't only caused by blocking mediators. There's a bunch of different ways that stratifying by post-treatment variables can happen.
+					- Quick example: Treatment T, covariate T, unobserved compound u, outcome Y. ``T -> X, u -> X, Y``. Stratifying by X will make you think the treatment works.
+					- We can explain this with the Collider.
 	- 3) "The Collider"
 		- ``X -> Z <- Y``
+		- "The most upsetting elemental confound"
+		- X and Y are not associated (share no causes) 
+			- $Y \perp X$ - "Y is independent from X"
+		- X and Y both influence Z, though.
+		- Once stratified by Z, X and Y are associated.
+			- $Y !\perp X | Z$ - "Y is not independent from X given Z"
+			- Z is jointly caused by X and Y.
+			- X and Y don't share any common causes! 
+		- Toy example
+			- Generate Bern. samples for X and Y, then a Z based on X and Y. 
+		- Another example: grant proposals being approved
+			- Grade proposals on a scale of trustworthiness and newsworthiness. 
+			- We can see a clear negative correlation between trust. and news. in accepted grants, but this is caused by trustworthiness and newsworthiness in combination - one doesn't affect the other.
+				- "Results in negative association, conditioned on award"
+		- Colliders can also emerge in your estimator.
+			- You can produce a spurious association between two unassociated variables
+			- Example: age, marriage, and happiness
+				- As time goes on, people are more likely to get married, so age affects marriage.
+				- But let's say it has no effect on happiness. 
+				- If we graph data points, it looks like as time goes on, there's a negative trend in happiness among married and unmarried people.
+					- We just introduced a compound where there was non previously.
 	- 4) "The Descendant"
 		- ``X -> Z -> Y,A``
- 
+		- A is the descendant here. How it behaves depends on what it's attached to.
+			- That is, when you stratify by a Descendant, it's like conditioning by the parent, but more weakly (not as direct.)
+		- $Y !\perp X$ - X and Y are causally associated through Z
+		- A holds information about Z
+		- If strong enough, $Y \perp X | A$. Once stratified by A, X and Y become less associated. 
+ 		- Descendants are everywhere. They're often a proxy to what we want to really observe. Just need to be aware that it's often a diluted version of our target and exercise judgement.
