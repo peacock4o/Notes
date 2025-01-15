@@ -383,7 +383,7 @@ bayesian_statistics
 		- 2) Splines and generalized additive models. "Less awful."
 			- Splines are built from many local functions, then smoothed together to make a single function.
 			- Linear models but with some "synthetic variables" (??? sound scary)
-			- $\mu_i = \alpha + w_1\beta_(i,1) + w_2\beta_(i,2) + w_3\beta_(i,3) + ...$
+			- $\mu_i = \alpha + w_1\beta_i,1 + w_2\beta_i,2 + w_3\beta_i,3 + ...$
 				- ``w`` is the weight of each point. "Like slopes."
 				- B is a "spline shape" - synthetic, choose this to determine shape in a particular region.
 					- Think of this as a coordinate on the x axis. "B values turn on weights in different regions"
@@ -413,7 +413,7 @@ bayesian_statistics
 			- If you know Y or X, you know something about the other one.
 		- Once stratified by Z, there's no association.
 			- Meaning that X and Y *are* independent for each (shared) level of Z. 
-			- Write this as ``Y (upside down T) X | Z``
+			- Write this as $Y \perp X | Z$
 			- Simulate Z first, then simulate X and Y based off Z - maybe offset by a coefficient of Z.
 			- Sample Z with Bernoulli trials, then generate X and Y seperately with norm distributions. See discrete/continuous examples.
 		- Ex. Why do regions of the USA with higher rates of marriage also have higher rates of divorce?
@@ -426,10 +426,56 @@ bayesian_statistics
 					- It's the same, really. For every value of A, we look at the assocation between M and D. We just need a continuous function to tell us the output.
 			- Statistical model
 				- $\mu_i=\alpha+\beta_M * M_i + \beta_A * A_i$
-			- Analyze
+				- Also think of it as $\mu_i=(\alpha + \beta_A * A_i) + \beta_M * M_i$
+					- We're stratifying by A by combining it with our intercept. 
+					- Remember - we're building an *estimator*. The betas refer to two distributions (starting as normal, but they eventually become our multivariable posterior.
+				- Ok, so we have our equations. Remember that we can transform measurement scales arbitrarily, so long as we transform them back when done.
+				- Standardizing variables is real handy when working with linear regressions. Not necessary, but helps with priors and makes computer more efficient.
+					- Standardize by subtracting the mean and dividing by the std. dev. In the example, our prior std. devs are 10, which is "very flat" (unconfident, so to speak)
+					- $D_i \sim Normal(\mu_i, \sigma)$
+						- Remember - we're seeing how marriage rates influence divorce rates, and stratifying by age to avoid confounding.
+					- $\mu_i=\alpha+\beta_M * M_i + \beta_A * A_i$ 
+					- $\alpha \sim Normal(0, 10)$
+					- $\beta_M \sim Normal(0, 10)$
+					- $\beta_A \sim Normal(0, 10)$
+					- $\sigma \sim Exponential(1)$
+						- Exponential distribution curves out - high density as approaches 0. Like a typical std. dev
+				- First, we take our data and standardize it.
+				- Then, let's form our posteriors with quap. 
+				- Then, let's graph them and compare with R. useful to do so on a "caterpillar plot" - think top down view of posteriors.
+				- The slopes and whatnot are alright, but they aren't really great at indicating some change. We need to introduce interventions.
+					- $p(D|do(M))$, meaning the distribution of D when we intervene ("do a certain") M.
+						- This implies manually reaching in and moving M around without caring about A. Mutilation!
+						- Think of it as ``A -> M, D, M -> D`` when no intervention but ``M, A -> D`` when we do(M)
+				- How do we do this? First, sample from our statistical model w/ posteriors that we just generated.
+					- NOT A NEW MODEL! We're just testing out how the model behaves when we intervene.
+				- Then, we create our own "made-up" mean for M and simulate D for our intervened M and samples of A.
+					- Ex. simulate D for M=0. Since we standardized our data, this is just the sample mean.
+					- Ex. simulate D for M=1. Now the mean of M is 1 std. dev away. 
+					- We compare the two of these by subtracting one distribution from another to find the difference upon changing. 
+						- In the example, the difference is centered on 0. *Could* be large or small change (we don't know, since our result is a distribution.) 
+				- In the example - what about $p(D|do(A))$? When we intervene on A, how does D change?
+					- How do we go about intervening on A? There's no arrows to delete going into A.
+						- Solution - fit new model that ignores M, then simulate any intervation you want.
+					- Why does this work? We've already kind of been doing this. It's intuitive that changing A will change D, but that's because it pipes through M.    
 	- 2) "The Pipe"
 		- ``X -> Y -> Z``
+		- Very similar in structure to the Fork. 
+		- X and Y are associated becaus eof the influence transmitted through Z. 
+		- Once we stratify by Z, there's no association.
+			- $Y \perp X | Z$ - "Y is independent from X conditional of Z"
+		- How is it different from the Fork?
+			- Z isn't a common cause - no effect on X at all.
+		- Toy sim: simulate X, then Z based off X, then Y based off Z.
+			- When stratifying by a discrete Z, we see there's no association between X and Y. "When we know Z, knowing X doesn't tell us anything about Y."
+		- Example: plant growth experiment. 100 plants, half treated with anti-fungal. Measure growth and fungus.
+			- Estimand: Causal effect of treatment on plant growth. We're trying to see how our treatment of anti-fungal stuff affects plant growth.
+			- Scientific model in abstract form
+				- ``F, H0 -> H1`` - "The initial plant height and amount of fungus influences the final plant height after treatment/growth"
+				- ``T -> F, H1`` - "The treatment has some effect on the amount of fungus and on the final plant height (positive or negative)"
+			- Our estimand is the *total* causal effect* of the 
 	- 3) "The Collider"
 		- ``X -> Z <- Y``
 	- 4) "The Descendant"
 		- ``X -> Z -> Y,A``
+ 

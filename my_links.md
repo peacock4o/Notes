@@ -21,6 +21,13 @@ my_links
 - ``https://www.masfoundations.org/mas.pdf``
 - ``https://hal.science/hal-00720669/file/Matignon2012independent.pdf``
 
+## $\LaTeX$ + Markdown
+- ``https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols``
+- ``https://www.cmor-faculty.rice.edu/~heinken/latex/symbols.pdf``
+- ``http://www.tlhiv.org/ltxpreview/``
+- ``https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions``
+- ``https://markdownlivepreview.com/``
+
 ## OCaml
 - ``https://discuss.ocaml.org/t/numerical-ranges-and-pattern-matching/3102``
 - ``https://stackoverflow.com/questions/41080014/ocaml-2d-array-for-game-of-life``
