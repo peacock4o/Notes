@@ -512,3 +512,7 @@ bayesian_statistics
 		- A holds information about Z
 		- If strong enough, $Y \perp X | A$. Once stratified by A, X and Y become less associated. 
  		- Descendants are everywhere. They're often a proxy to what we want to really observe. Just need to be aware that it's often a diluted version of our target and exercise judgement.
+
+## **06 - GOOD & BAD CONTROLS**
+
+-  

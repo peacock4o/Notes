@@ -28,6 +28,10 @@ my_links
 - ``https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions``
 - ``https://markdownlivepreview.com/``
 
+## Math
+- ``https://math.okstate.edu/people/binegar/3613/3613-l01.pdf``
+	- Intro proofs
+
 ## OCaml
 - ``https://discuss.ocaml.org/t/numerical-ranges-and-pattern-matching/3102``
 - ``https://stackoverflow.com/questions/41080014/ocaml-2d-array-for-game-of-life``
