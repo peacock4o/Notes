@@ -515,4 +515,50 @@ bayesian_statistics
 
 ## **06 - GOOD & BAD CONTROLS**
 
--  
+- General rule of thumb - try not to be clever. By that, we mean try to be reproducible and clear. 
+	- Others can use same logic to challenge and improve on your work.
+- Reminder - elemental confounds
+	- Fork - ``X <- Z -> Y``
+		- X and Y associated unless stratified by Z
+		- Open by default. 
+	- Pipe - ``X -> Z -> Y``
+		- X and Y associated unless stratified by Z
+	- Collider - ``X -> Z <- Y``
+		- X and Y not associated unless stratified by Z
+- We want some framework for combining elemental confounds and using them to draw conclusions about our estimator/estimand.
+	- Ex. most basic causal inference problem - the confound.
+		- ``X -> Y``, ``U -> X, Y``
+		- Want to find causal influence of X on Y
+	- What if we can't measure U to stratify by it? Then randomize X!
+		- Effectively removes all arrows into X.
+		- ``R -> X, X,U -> Y``
+		- Remember - X is the treatment. 
+		- AKA ``X -> Y, U -> X,Y`` without randomization, ``X -> Y, U -> Y`` with randomization (do(X))
+	- We can't always do this. A lot of problems are observational, not experimental. 
+		- Observational solution - stratify
+		- Experimental solution - randomize
+	- Also, sometimes experimental stuff is "monstrously unethical"
+	- Also also, sometimes we can't fully randomize a variable. This would only remove influence to a partial degree.
+		- Why? Noncompliance from human test subjects, or something like that
+- Main idea - in an experiment, we **cut causes of the treatment.**
+- Is there some statistical procedure that mimics randomization? How could this even work?
+	- The goal is to, for any particular DAG, deduce some way to process the data to get a mathematical expression which is equal to the distribution of our outcome variable Y conditional on do(X)
+		- ``P(Y|do(X)) = P(Y|?)``
+		- ``P(Y|do(X))`` = "The distribution of Y given/stratified by our intervention on X"
+	- We can do this mathematically. We can also do this just by looking at the graph.
+	- Ex. simple confound from previous example
+		- We know that to remove the confound, we stratify by U. But why does that work?
+		- Because it's a fork, and to *close* the fork, we stratify by the center.
+		- When we stratify by U, any remaining influence of X on Y is *not* because of U
+		- $P(Y|do(X)) = \sum_(U) P(Y|X,U)P(U) = E_UP(Y|X,U)$
+			- "The distribution of Y when we do X is equal to the distribution of Y given/stratified by X and the control variables (U), averaged over the distribution of the control variables"
+				- Apparently there's an analytical system to do this. 
+				- Read "The Book of Why" by Judea Pearl and Dana Mackenzie" and "Causality: Models, Reasoning, and Inference" by Judea Pearl"
+				- Transform the DAG into an algebraic system and deduce the kinds of transformations/proper stratifications needed. 
+			- Remember - the causal effect of X on Y is **not** the coefficient relating X to Y
+	- Ex. cheetahs and baboons preying on gazelles
+		- ``B -> G, C -> B, G``
+		- Cheetahs eat a lot of gazelles and some amount of baboons. When cheetahs are present, baboons stay away from gazelles.
+		- When cheetahs are absent, baboons eat even more gazelles than cheetahs do.
+		- Therefore, the causal effect of baboons depends on the distribution of the cheetahs (!important point!)
+	
