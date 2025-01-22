@@ -561,4 +561,31 @@ bayesian_statistics
 		- Cheetahs eat a lot of gazelles and some amount of baboons. When cheetahs are present, baboons stay away from gazelles.
 		- When cheetahs are absent, baboons eat even more gazelles than cheetahs do.
 		- Therefore, the causal effect of baboons depends on the distribution of the cheetahs (!important point!)
-	
+	- For DAGs, rules for finding P(Y|do(X)) are known as do-calculus.
+		- Says what is possible to say before picking functions
+		- Justifies heuristic graphical analysis
+	- Do-calculus is *worst case* - additional assumptions often allow stronger inference. 
+		- We don't assign values to relationships (non-parametric), so see above.
+	- Do-calculus is *best case* - if inference possible by do-calculus, does not depend on special assumptions.
+- In this lecture, we'll focus on the **Backdoor Criterion**. A shortcut to applying (some) results of do-calculus.
+	- Can be performed graphically/visually.
+	- This is a rule to find a set of variables to stratify by to yield P(Y|do(X))
+	- Steps! With example of ``X -> Y, U -> Z -> X, U -> Y``
+		- 1) Identify all paths connecting the treatment (X) to the outcome
+			- Ex. ``X - Z - U - Y`` and ``X - Y``
+			- Causation goes one way, but association is both ways, so  direction doesn't matter for this.
+		- 2) Paths with arrows entering X are backdoor paths. (confounding paths)
+			- Ex. ``X - Z - U - Y`` is a confounding path.
+		- 3) Find the "adjustment set" that closes/blocks all backdoor paths.
+			- Ex. Block the pipe so $X \perp U | Z$ ("X is not associated with U given/stratified by an intevened Z")
+			- Pipes and forks are **open** by default, meaning equal information can flow between the two. Stratify by the intermediate variables to close the patterns.
+			- Colliders are **closed** by default. If you stratify by an intermediate variable, you will open it and may create a backdoor path.
+			- Be careful when you stratify by certain variables. Don't want to accidentaly open a path.
+			- Notify this stratification as ``P(Y|do(X)) = \sum_zP(Y|X,Z)P(Z=z)``
+				- "The distribution of Y when stratified by X and Z averaged over the distribution of Z"
+				- This tells us that our mathematical model to posterior distribution-ize is: 
+					- $Y_i \sim Normal(\mu_i,\sigma)$
+					- $\mu_i = \alpha + \beta_XX_i + \beta_ZZ_i$
+				- Remember - here, linear regressions are useful for stratifying by certain variables. Use if appropriate!
+			- Depending on the layout, there's some times when we can't estimate the exact direct effect, but we can estimate the total effect.
+			- 
