@@ -16,6 +16,8 @@ my_links
 
 ## Finance
 - ``https://www.youtube.com/watch?v=pr-u4LCFYEY``
+- ``https://www.youtube.com/shorts/OUGDlKnRLOI``
+	- Diff. eq
 
 ## Game Theory
 - ``https://www.masfoundations.org/mas.pdf``

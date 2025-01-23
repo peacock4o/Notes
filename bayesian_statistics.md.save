@@ -514,7 +514,6 @@ bayesian_statistics
  		- Descendants are everywhere. They're often a proxy to what we want to really observe. Just need to be aware that it's often a diluted version of our target and exercise judgement.
 
 ## **06 - GOOD & BAD CONTROLS**
-``https://www.youtube.com/watch?v=uanZZLlzKHw``
 
 - General rule of thumb - try not to be clever. By that, we mean try to be reproducible and clear. 
 	- Others can use same logic to challenge and improve on your work.
@@ -589,56 +588,5 @@ bayesian_statistics
 					- $\mu_i = \alpha + \beta_XX_i + \beta_ZZ_i$
 				- Remember - here, linear regressions are useful for stratifying by certain variables. Use if appropriate!
 			- Depending on the layout, there's some times when we can't estimate the exact direct effect, but we can estimate the total effect.
-- Some (control) variables are good, some are bad.
-	- What are some bad ones?
-		- Anything in the spreadsheet
-		- Any variables not highly collinear 
-		- Any pre-treatment measurement.
-	- See example of friends and hobbies affecting health. 
-		- Being friends and health is unrelated, but when you add hobbies, you introduce a confound. Hobbies are tied to health and friendship.
-- Let's talk colliders.
-	- Don't condition on colliders! Already closed.
-	- Sometimes, they aren't so obvious. Must consider the possibility of an unknown collider, sometimes.
-- Case-control bias
-	- ``X -> Y``, but also ``Y -> Z``
-	- Don't select/stratify on an outcome or result of the outcome.
-- "Precision parasite"
-	- ``Z -> X -> Y``
-	- Z isn't a backdoor, but still not good to condition on Z. 
-	- Think like this - we're only after the direct effect of X on Y. Conditioning on Z works, sure, but it doesn't really actually matter and just adds noise.
-	- "Bias amplification" - makes biased results worse. 
-
-## **07 - FITTING OVER AND UNDER**
-``https://www.youtube.com/watch?v=1VgYIsANQck``
-
-- Generally, using a simpler model + estimator is desired.
-	- In the real world, we're often trading off accuracy for simplicity
-	- But why is accuracy related to simplicity anyways?
-	- For any given situation, there could be multiple causal models that work.
-		- Ergo for each model, an estimator exists.
-			- Some are better and worse in the data.
-	- Two main struggles when designing useful estimators
-		- Struggle against causation
-			- How to use causal assumptions to design estimators and contract alternative causal models with one another
-		- Struggle against data
-			- How do we make the estimator *work*? Make it effective? (Go figure.)
-- Simple example: given data points of body mass to brain volume, predict a function.
-	- When we make a line, consider how to make a function that describes these points.
-		- (Fitting) How many parameters do we want to use?
-			- Then, are there upsides/downsides to over/underfitting?
-		- (Compression) IDK what this means yet
-	- Also, which function explains these points?
-		- Causal inference?
-	- What if we intervene on a point's value?
-	- Think about it like this:
-		- We need a function that generates and need a function that fits to the output
-	- Sometimes, your goal is to *predict* a value rather than gain insight into the causal model of some system
-- Leave-one-out cross validation
-	- Method of evaluating how good a line-fitting method is at predicting values.
-		- Especially good with small dataset, but computationally expensive.
-		- Once we have our estimator, how do we actually predict how good it is?
-	- 1) Drop one point of the dataset.
-	- 2) Fit the line to the remaining points.
-	- 3) Predict the dropped point (based off x, predict y.)
-	- 4) Go to step (1) with the next point.
-	- 5) Score is the percent error on the dropped 
+	- Do-calculus is much more than backdoor criterion and adjustment sets.
+	- Also, remember that 
