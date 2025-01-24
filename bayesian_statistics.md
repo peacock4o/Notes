@@ -642,3 +642,27 @@ bayesian_statistics
 	- 3) Predict the dropped point (based off x, predict y.)
 	- 4) Go to step (1) with the next point.
 	- 5) Score is the percent error on the dropped 
+	- What does the equation for this look like?
+		- $lppd_{CV} = \sum^N_{i=1}\frac{1}{S}\sum^S_{s=1}logPr(Y_i|\theta_{-i,s}) $
+		- wtf does this mean?
+			- $lppd_{CV}$ - "Log pointwise predictive density"
+			- $\sum^N_{i=1}$ - Do this thing for each data point i of the N total data points.
+			- $\frac{1}{S}\sum^S_{s=1}$ - Average of the below function on each s of the S samples from the posterior, 
+			- $logPr(y_i|\theta_{-i,s})$ - The log distribution of 
+			- Above two lines are the average log probability for point i
+				- Typically, the predictive density is $p(y_i|y_{-i}) = \int p(y_i|\theta)p(\theta|y_{-i})d\theta$
+					- Integral of posterior * probability of y_i given posterior parameters
+				- Then, take the log of this and sum it. 
+		- Ok, now that I understand it better.
+			- $P(Y_i|\theta_{-i,s})$ - The likelihood of the omitted point $Y_i$ given the s-th posterior sample.
+				- "Posterior sample" means a set of parameters taken from the post dist. For example, $\mu_i = \alpha + \beta * X_i$, where $\theta = {\alpha, \beta, \sigma}$ and $X_i$ is a predictor
+			- $\frac{1}{S}\sum^S_{s=1}$ - The average log probability of the omitted variable arising from $\theta$ sampled from the posterior distribution.
+				- Omit point i, form posterior distribution. Sample theta S times. For each sample s, find the probability of the omitted data point. Log this value and average all values per point.
+			- $\sum^N_{i-1}$ - The sum of all averaged values calculated above.
+				- Higher scores = worse, lower scores = better
+			- In the video, it looks a little different. 
+				- Calculate post. dist., sample theta S times is the same. But distance from line to omitted point seems to be measured, presumably averaged and summed for the score.
+			- "Omit, dist., ", but the order is a bit unclear. And why is the score positive when the log of a probability is negative? And why does the video show distance from the curve to the omitted point?	 
+	- We see that lower-order polynomials (i.e. linear models) are **worse in-sample** (aligning to data points within the training set) but **better out of sample** (predicting unseen data points.)
+		- The inverse is true for simple models - more parameters improve fit to sample, but may reduce accuracy of predictions out of sample.
+		- Most accurate models trade off flexibility with *overfitting*.

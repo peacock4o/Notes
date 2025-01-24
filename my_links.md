@@ -33,6 +33,10 @@ my_links
 ## Math
 - ``https://math.okstate.edu/people/binegar/3613/3613-l01.pdf``
 	- Intro proofs
+## ML
+- ``https://www.youtube.com/watch?v=wen3221_3gU``
+	- Related to below book
+- ``https://www.manning.com/books/grokking-machine-learning``
 
 ## OCaml
 - ``https://discuss.ocaml.org/t/numerical-ranges-and-pattern-matching/3102``
