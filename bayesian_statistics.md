@@ -665,4 +665,41 @@ bayesian_statistics
 			- "Omit, dist., ", but the order is a bit unclear. And why is the score positive when the log of a probability is negative? And why does the video show distance from the curve to the omitted point?	 
 	- We see that lower-order polynomials (i.e. linear models) are **worse in-sample** (aligning to data points within the training set) but **better out of sample** (predicting unseen data points.)
 		- The inverse is true for simple models - more parameters improve fit to sample, but may reduce accuracy of predictions out of sample.
-		- Most accurate models trade off flexibility with *overfitting*.
+		- More accurate models offer flexibility alongside a tendency for *overfitting*.
+	- Overfitting depends on priors.
+		- **Regularization**: Function finds regular features of process.
+			- Means "not being too exciteable" about every pointin the sample - not every feature in a sample is regular (doesn't represent the long run.)
+		- We have a nice tool for dealing with this - priors.
+			- Meaning we can tighten our priors to allow for less flexibility. 
+			- Think about having a wide intercept prior distribution vs. a tight one that's scientifically justified.
+	- Cross-validation by itself does nothing to produce good models (only comparative). Use regularization with priors to achieve good, skeptical models.
+	- Ex. using wide vs. tight priors.
+		- Tight priors help when predicting out of sample, but hurt when fitting in-sample.
+			- Which makes sense. Can't reach outliers as well, but fit larger dataset more appropriately.
+			- You *can* make priors too tight. At some point, they start getting worse both in-sample and out of sample. "Extremely skeptical" due to small sample + prior sizes.
+	- How do we choose priors?
+		- For causal inference, use science.
+		- For pure prediction, can tune the prior using cross-validation.
+		- Most tasks are a mix of inference and prediction.
+		- No need to be perfect - "just better."
+- Prediction penalty
+	- For polynomial counts, find difference of prediction errors between in-sample and out-of-sample. This is the *prediction penalty.* Try graphing it.
+	- Goes up and up - would be useful to see this behavior of a posterior distribution without having to refit N models each time.
+		- We can!
+			- "Importance sampling" (PSIS)
+			- "Information criteria" (WAIC)
+	- WAIC, PSIS, CV measure overfitting through the prediction penalty term.
+	- Regularization manages overfitting.
+	- But none of these directly address causal inference.
+		- They're important for understanding statistical inference, but they're only pieces to the puzzle.
+		- DONT use predictive criteria (WAIC, PSIS, CV) to choose a causal estimate.
+			- They actually prefer confounds and colliders. See plant growth experiment.
+- Outliers and robust regression
+	- Some points are more influential than others
+	- Outliers indicate predictions are possibly overconfident, unreliable.
+		- The model doesn't expect enough variation, which makes sense.
+		- So, dropping outliers doesn't actually fix anything. Just ignores the problem - predictions are still bad!
+			- The model's wrong, not the data.
+			- So what do?
+				- Quantify the influence of each point.
+				- use a mixture model (robust regression)

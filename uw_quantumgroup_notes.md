@@ -10,4 +10,72 @@ uw_quantumgroup_notes
 - ``https://scirate.com/arxiv/2501.07625``
 	- If it's one qubit, can extract. (??)
 - Working on problem of "position verification" this quarter 
-- 
+
+## *MEETING 1*
+
+- Terms to look up
+	- CHSH
+	- "Unconditional proof"
+	- EPR pair
+	- Game theory in quantum applications
+	- Notation of |b>, |x>, etc.
+- General notes from people speaking
+	- use multiple bits of entanglement (?)
+- Proof of quantumness!
+	- Review of what a POQ is
+	- A simple template for PoQ
+- What is a PoQ?
+	- A game a classical verifier V plays with unknown prover P such that:
+		- P can convince V that it's quantum
+		- No classical prover can convince V that it's quantum
+	- If A + B share an EPR pair and Alice makes any measurement, then Alice and Bob's resulting states will be the same.
+	- Examples
+		- Factoring
+			- Think Shor's algorithm - makes quantum easy, but classical hard
+		- Random quantum circuit
+			- Send P quantum circuit, ask P to send back the result
+		- CHSH game
+			- Unconditional proof of quantumness with two noncommunicative provers
+				- Not ideal - we want a game with one prover
+				- Unconditional proof means ...
+			- Ex. 
+				- V samples two random bits u and v - one as a question for for Alice A and one for Bob B
+			 	- Each provides a bit answer a and b
+				- Accept if ``u /\ v = a XOR b``
+			- Best classical strategy has a winning strategy of 3/4
+			- Quantum strategy does better - $frac{(cos(\pi)}{8})^2$
+			- A + B share EPR pair
+				- A -> u=0: std basis, u=1: H-basis
+				- B -> v=0: $frac{\pi}{8}$ basis, v=1: $-frac{\pi}{8}$ basis
+		- Cryptographic
+			- Use cryptography to attain efficient verification
+			- Conditioned on the underlying cryptography game
+- Simple template for PoQ
+	- Notes
+		- If the system is quantum, the only way to break encryption is to perform H-basis measurement
+		- More or less a modified version of the CHSH game
+		- P does most of the heavy lifting in the first round with the encrypted measurement
+	- V chooses bit u {0,1}, encrypts, and sends to P
+	- P performs "encrypted Hadamard-basis measurement", sends back d
+		- ``u=0: onetimepad(|0>)`` in set ``{|0>, |1>}``
+		- ``u=1: onetimepad(|+> or |->)`` in set ``{|+>, |->}``
+		- (Honest prover's interactions)
+	- V determines a using d
+	- V prepares and sends v to B
+	- Bob does usual strategy, sends back b
+	- P accepts if ``u /\ v = a XOR b``
+- Instantiation of PoQ
+	- Use dual-mode trapdoor functions
+		- Get two functions $f_0, f_1$ along with a trapdoor function x. $y_0, y_1: x -> y$ are injective
+		- Mode 0: $f_0, f_1 are disjoint images$
+		- Mode 1: $f_0, f_1 are same image$
+		- Two modes should be computationally indistinguishable in order to maintain the "dual-mode" property
+		- Trapdoor allows us to invert functions: $x_i = f_i^{-1}(y,t))$
+	- Example of usage
+		- V generates u {0,1}
+		- V instantiates a pair of trapdoor functions $f_0, f_1$ from u, sends them over to P
+		- P computes on enc(u) using functions.
+			- if u=1, in mode 1. 
+				- ``|0>|x_0> + |1>|x_1>``
+				- $H^n$ on second register
+				- I give up on writing this down (lol)

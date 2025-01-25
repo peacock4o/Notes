@@ -33,6 +33,9 @@ my_links
 ## Math
 - ``https://math.okstate.edu/people/binegar/3613/3613-l01.pdf``
 	- Intro proofs
+## Misc.
+- ``https://www.sigmajs.org/``
+
 ## ML
 - ``https://www.youtube.com/watch?v=wen3221_3gU``
 	- Related to below book
@@ -78,3 +81,5 @@ my_links
 - ``https://www.youtube.com/watch?v=FdnMWdICdRs&list=PLDcUM9US4XdPz-KxHM4XHt7uUVGWWVSus``
 	- Statistical Rethinking - main course
 	- Currently on Episode ``5``
+- ``https://chrispiech.github.io/probabilityForComputerScientists/en/part1/log_probabilities/``
+	- Stanford Probability for Computer Scientists. Also ML-ish
