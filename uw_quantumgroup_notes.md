@@ -19,6 +19,7 @@ uw_quantumgroup_notes
 	- EPR pair
 	- Game theory in quantum applications
 	- Notation of |b>, |x>, etc.
+	- Ring learning with errors ("RLWE")
 - General notes from people speaking
 	- use multiple bits of entanglement (?)
 - Proof of quantumness!
@@ -67,8 +68,8 @@ uw_quantumgroup_notes
 - Instantiation of PoQ
 	- Use dual-mode trapdoor functions
 		- Get two functions $f_0, f_1$ along with a trapdoor function x. $y_0, y_1: x -> y$ are injective
-		- Mode 0: $f_0, f_1 are disjoint images$
-		- Mode 1: $f_0, f_1 are same image$
+		- Mode 0: $f_0, f_1$ are disjoint images
+		- Mode 1: $f_0, f_1$ are same image
 		- Two modes should be computationally indistinguishable in order to maintain the "dual-mode" property
 		- Trapdoor allows us to invert functions: $x_i = f_i^{-1}(y,t))$
 	- Example of usage
@@ -79,3 +80,6 @@ uw_quantumgroup_notes
 				- ``|0>|x_0> + |1>|x_1>``
 				- $H^n$ on second register
 				- I give up on writing this down (lol)
+- To read:
+	- ``https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=927073`` for circuit sampling
+	- ``Introduction to Modern Cryptography by Lindell and Katz``
