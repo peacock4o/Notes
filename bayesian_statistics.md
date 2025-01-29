@@ -811,3 +811,97 @@ bayesian_statistics
 			- Each function can be broken down into smaller functions with the chain rule, then derived from there.
 			- Consider symbolic derivatives of your model code
 			- used in many ML approaches. "Backpropogation" is a special case.
+- Example: the Judgement at Princeton
+	- Wine tasting judgement in New Jersey
+	- Made up of: 
+		- 20 wines (10 French, 10 NJ, all blinded)
+		- 9 French and American judges. 
+		- 180 scores
+	- This is a way for us to introduce "item response"
+	- For each score, consider the following variables:
+		- Wine quality Q
+			- This is what the whole competition is really about. 
+			- We can't observe true quality, though
+		- Score S
+			- Each wine has a score. 
+			- We **can** observe this.
+		- Judge J
+			- Who gave the score in the first place?
+			- They have some preferences or other unobservable characteristics/disposition, affecting score.
+		- Wine origin X
+			- Where does the wine come from?
+			- Affects Q directly
+			- Affects S directly **and indirectly**
+				- If a French judge knows they're drinking a French wine, they will probably rate it higher.
+			- Observed
+		- Origin of judge Z
+			- To address bias, we can observe the judge's origin
+			- Affects J (individual and their predispositions)
+	- Relationships:
+		- ``X -> <Q> -> S``, ``Z -> <J> -> S``
+			- We try to avoid X influencing S by blinding the wine, removing ``X -> S``
+		- No confounds, but our estimand is estimating wine quality and stratifying it by origin
+			- Not needed for confound purposes, but eliminates any potential unobserved confounds anyways
+				- Maybe the blind isn't perfect, in which case there's a fork that requires statifying by X anyways.
+	- Our estimand is the association between the quality of wine and its origin
+		- Stratify by X for potential confounds
+		- Stratify by J for efficiency
+			- Not a confound, but competing cause for the score.
+	- Process:
+		- Prepare mathematical model
+			- $S_i \sim Normal(\mu_i,\sigma)$
+				- Scores are standardized
+			- $\mu_i = Q_{W[i]}$
+			- $Q_j \sim Normal(0,1)$
+				- Latent, arbitrary variable. We can assign it whatever.
+			- $\sigma \sim Exponential(1)$
+		- Prepare data in R
+			- Standardize S
+			- J is an index for a specific judge
+			- W is an index for a specific judge
+			- X is an index for wine origin. 1=America, 2=France
+			- Z is an index for judge origin. 1=America, 2=France
+			- Later on, we add a couple new parameters. No reason not to do this!
+				- H - Judge harshness
+					- Subtracted from quality/origin offsets
+					- How good the wine needs to be for the judge to rate it as average
+				- D - Judge discrimination
+					- Coefficient of all previous operations
+					- How much little differences matter to the judge
+				- Like bias and 
+		- Then, estimate relationships!
+			- Run the model
+			- Do some sampling, build the Markov chain
+			- Autodiff, find gradeints
+			- Run Hamiltonian simulation
+			- Display output
+	- Markov Chains are complex, but have a lot of diagnostic options
+		- 1) Trace plots
+			- Visualization of Markov chain
+			- Look for fuzzy caterpillar when chains are overlaid.
+				- What does this mean? Look for it to explore the parameter space consistently.
+				- Good chains overlap with one another well
+				- Bad chains have lots of gaps, don't explore the space well. 
+					- Inefficient. The chain will eventually explore the post. dist., but it's gonna take a ton of samples and some prayer
+			- Gray region at the start = warmup region (not samples from the post. dist.)
+			- Need to fit more than 1 chain to assess "convergence"
+				- This is how we get the overlaid chains - by fitting multiple.
+				- "Convergence" - Each chain explores the right distribution and every chain explores the same distribution 
+		- 2) Trace rank (trank) plots
+			- Same data as a trace plot, but take rank orders of samples and plot them.
+			- Makes geometric shaped chain overlay. 
+			- You want to see that all chains generally share the top/bottom equally, frequently intermixed. Still uniform, like the fuzzy caterpillar.
+		- 3) R-hat convergence measure
+			- Remember our convergence criteria
+			- R-hat is a ratio of variances
+			- Given that our chains should be exploring the same space, the average variance should converge on 1
+			- Not a test! No guarantees
+		- 4) Number of effective samples
+			- AKA n_eff
+			- Approximation of how long the chain would be if it were perfectly uncorrelated.
+			- Alternatively, when samples are *autocorrelated*, you have fewer effective samples.
+			- Typically, will be shorter than your number of samples. Bigger number = better.
+				- Sometimes, Stan will be so good that it'll do better than perfectly random. Ut's not a bug if you see larger than your sample size.
+		- 5) Divergent transitions
+			- We'll talk about them at a future time.
+			- A type of rejected proposal

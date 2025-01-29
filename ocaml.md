@@ -396,3 +396,15 @@ Annotations are **NOT** type casts. They're just a check that an expression actu
 	- No run-time meaning for a type annotation - it only exists to be useful in compiler-land. ``(e : t)`` compiles down to ``e``
 - Static semantics
 	- If ``e`` has type ``t`` then ``(e : t)`` has type ``t``
+
+## Functions
+
+Functions are independent. Methods are part of objects. Remember this difference.
+
+``let x = 42`` is an example of a definition.
+
+``let f x = ...`` is an example of a function definition.
+
+``let rec f x = ...`` is an example of a recursive function definition.
+
+
