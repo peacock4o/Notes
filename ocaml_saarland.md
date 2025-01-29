@@ -154,3 +154,17 @@ saarland
 						- ``pow x 0 := 1``
 						- ``pow x n := x * pow x (n - 1) is n > 0``
 							- ``:=`` reads like "is defined as"
+					- We observe the defining equations are **terminating**.
+						- This is the **termination argument**:
+							- Each recursion step issued by the second equation decreases ``n`` by 1
+							- Since ``n`` occupies natural numbers, it must eventually reach 0.
+				- There are some issues with perfectly translating from mathematical form to code form.
+					- Type changes to ``int -> int -> int``.
+						- There isn't a special type for ``\N``, so it will admit arguments not admissible for the mathematical function.
+							- Think negative numbers
+							- These are called **spurious arguments**
+					- What about terminating for negative numbers? We handle this by checking if below 1, but not perfect.
+					- Type ``int`` isn't the full mathematical type $\Z$ of integers - just a finite interval of machine ints
+				- Arguing the **correctness** of a function happens at the mathematical level using $\Z$ and $\N$.
+					- When realizing in OCaml, we kind of just pray (lol) that our computations are small enough to fit in the machine int space. 
+				
