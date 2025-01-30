@@ -211,4 +211,29 @@ saarland
 				- The $\lambda x.e$ notation can be read as "unnamed function takes a variable and refers to it as ``x`` in the expression ``e``"
 		- Realize this function as ``let div x y = first (fun k -> (k + 1) * y  > x) 0``
 			- We realize $\lambda x.e$ as ``fun k -> (e)``, where ``e`` uses ``k``
-		- ``first`` is our 
+		- ``first`` is a partial function.
+			- That's because there's no guarantee that ``f`` will ever return true. Could diverge!
+
+## 1.9 - Partial Applications
+
+- Consider the following functions
+	- ``let test x y k = (k + 1) * y > x``
+		- $test : \mathbb{N} \rightarrow \mathbb{N} \rightarrow \mathbb{N} \rightarrow \mathbb{B}$
+	- ``let div x y = first (test x y) 0``
+		- When we apply ``x`` and ``y`` to test, it yields a function with type $\mathbb{N} \rightarrow \mathbb{B}$
+			- AKA we apply some variables, but not all of them. The resulting functional type relies on the variables left.
+		- This is called a **partial application.**
+	- We can describe partial applications of ``test`` with equivalent lambda expressions
+		- $test x y k = (k + 1) * y > x$
+			- $\mathbb{N} \rightarrow \mathbb{N} \rightarrow \mathbb{N} \rightarrow \mathbb{B}$
+		- $test x y = \lamba k. (k + 1) * y > x$
+			- $\mathbb{N} \rightarrow \mathbb{N} \rightarrow (\mathbb{N} \rightarrow \mathbb{B})$
+		- $test x = \lamba k. \lamba y. (k + 1) * y > x$
+			- $\mathbb{N} \rightarrow (\mathbb{N} \rightarrow \mathbb{N} \rightarrow \mathbb{B})$
+		- $test = \lamba k. \lambda y. \lambda x. (k + 1) * y > x$
+			- $(\mathbb{N} \rightarrow \mathbb{N} \rightarrow \mathbb{N} \rightarrow \mathbb{B})$
+			- Can also abbreviate nested lambda expressions - $\lambda x. \lambda y. \lambda k. \rightarrow \lambda xyk.$
+		- Note that applications group to the left, whereas function types group to the right
+			- Now I know what this means! Yay!
+- Two functions are considered equal if they agree on all arguments.
+	- That is, two functions are equal if they have the same graph.
