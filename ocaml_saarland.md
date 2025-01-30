@@ -193,7 +193,7 @@ saarland
 	- If ``f(k) = true``, we say that *k satisfies f*
 	- This doesn't actually specify any functionality. This is a black box that tests some int for some quality and returns true/false.
 - A *linear search* is a function that, given a starting int and a boolean test, increments from the starting int until the first time that the test returns true
-	- $first : (\mathbb{N} \right \mathbb{B}) \rightarrow \mathbb{N} \rightarrow \mathbb{N}$
+	- $first : (\mathbb{N} \rightarrow \mathbb{B}) \rightarrow \mathbb{N} \rightarrow \mathbb{N}$
 		- Where $(\mathbb{N} \rightarrow \mathbb{B})$ is the functional type of our boolean test function.
 	- We want our function to find the first ``k`` to satisfy ``f`` where ``f = n, n + 1, n + 2, \cdots``. So here's our defining equations.
 		- $first(f, k) = k if f(k) = true$ 
@@ -226,11 +226,11 @@ saarland
 	- We can describe partial applications of ``test`` with equivalent lambda expressions
 		- $test x y k = (k + 1) * y > x$
 			- $\mathbb{N} \rightarrow \mathbb{N} \rightarrow \mathbb{N} \rightarrow \mathbb{B}$
-		- $test x y = \lamba k. (k + 1) * y > x$
+		- $test x y = \lambda k. (k + 1) * y > x$
 			- $\mathbb{N} \rightarrow \mathbb{N} \rightarrow (\mathbb{N} \rightarrow \mathbb{B})$
-		- $test x = \lamba k. \lamba y. (k + 1) * y > x$
+		- $test x = \lambda k. \lambda y. (k + 1) * y > x$
 			- $\mathbb{N} \rightarrow (\mathbb{N} \rightarrow \mathbb{N} \rightarrow \mathbb{B})$
-		- $test = \lamba k. \lambda y. \lambda x. (k + 1) * y > x$
+		- $test = \lambda k. \lambda y. \lambda x. (k + 1) * y > x$
 			- $(\mathbb{N} \rightarrow \mathbb{N} \rightarrow \mathbb{N} \rightarrow \mathbb{B})$
 			- Can also abbreviate nested lambda expressions - $\lambda x. \lambda y. \lambda k. \rightarrow \lambda xyk.$
 		- Note that applications group to the left, whereas function types group to the right
