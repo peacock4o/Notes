@@ -170,5 +170,45 @@ saarland
 		- Apply these to previous functions we've explored
 			- Digit sum
 				- $D : \mathbb{N} \rightarrow \mathbb{N}$
-				- $D(x) := x$
-				- $D(x) := $
+				- $D(x) := x if x < 10$
+				- $D(x) := D(x / 10) + x % 10$
+			- Digit reversal
+				- $R : \mathbb{N} \rightarrow \mathbb{N} \rightarrow \mathbb{N}$
+				- $R 0 a := a$
+				- $R n a := R (x / 10) (10 * a + n % 10) if x > 0$
+			- Combine defining equations with curly braces. 
+		- Most functions will be total, where the defining equations terminate for all arguments
+			- Functions where this is not the case are called **partial** functions.
+			- A function **diverges** for an argument if it does not terminate for that argument. Ex.
+				- $f : \mathbb{N} \rightarrow \mathbb{N}$
+				- $f(n) := f(n) if n < 10$
+					- ``f`` diverges for arguments less than 10
+				- $f(n) := n if n >= 10$
+		- Given a function ``f : X -> Y``, we can think of it as a line made up of ``(x, f(x))`` for each value of ``x`` in ``X``
+			- This is the **graph** of the protocol
+
+## 1.8 - Linear Search and Higher-Order Functions
+
+- A *boolean test for numbers* is a function ``f : int -> bool``.
+	- If ``f(k) = true``, we say that *k satisfies f*
+	- This doesn't actually specify any functionality. This is a black box that tests some int for some quality and returns true/false.
+- A *linear search* is a function that, given a starting int and a boolean test, increments from the starting int until the first time that the test returns true
+	- $first : (\mathbb{N} \right \mathbb{B}) \rightarrow \mathbb{N} \rightarrow \mathbb{N}$
+		- Where $(\mathbb{N} \rightarrow \mathbb{B})$ is the functional type of our boolean test function.
+	- We want our function to find the first ``k`` to satisfy ``f`` where ``f = n, n + 1, n + 2, \cdots``. So here's our defining equations.
+		- $first(f, k) = k if f(k) = true$ 
+		- $first(f, k) = first(f, k+1) if f(k) = false$
+	- We call ``first`` a **higher order function** because it accepts other functions as a parameter
+		- Key part of functional programming!
+- Let us revisit the division function.
+	- We characterized $x / y$ as the max int $k$ where $k * y \leq x$
+	- We can also characterize it as the first int $(k + 1) * y > x$
+		- AKA The first int where the next int's multiple will go over x
+	- Remember our defining equations!
+		- $div : \mathbb{N} \rightarrow \mathbb{N} \rightarrow \mathbb{N}$
+		- $div x y = first(\lambda k.(k + 1) * y > x) 0$ 
+			- Note that we use a **lambda expression**. Essentially, a function without a name.
+				- The $\lambda x.e$ notation can be read as "unnamed function takes a variable and refers to it as ``x`` in the expression ``e``"
+		- Realize this function as ``let div x y = first (fun k -> (k + 1) * y  > x) 0``
+			- We realize $\lambda x.e$ as ``fun k -> (e)``, where ``e`` uses ``k``
+		- ``first`` is our 
