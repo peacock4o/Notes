@@ -167,4 +167,8 @@ saarland
 					- Type ``int`` isn't the full mathematical type $\Z$ of integers - just a finite interval of machine ints
 				- Arguing the **correctness** of a function happens at the mathematical level using $\Z$ and $\N$.
 					- When realizing in OCaml, we kind of just pray (lol) that our computations are small enough to fit in the machine int space. 
-				
+		- Apply these to previous functions we've explored
+			- Digit sum
+				- $D : \mathbb{N} \rightarrow \mathbb{N}$
+				- $D(x) := x$
+				- $D(x) := $

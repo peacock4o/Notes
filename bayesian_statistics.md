@@ -905,3 +905,68 @@ bayesian_statistics
 		- 5) Divergent transitions
 			- We'll talk about them at a future time.
 			- A type of rejected proposal
+
+## **09 - MODELING EVENTS**
+``https://www.youtube.com/watch?v=Zi6N3GLUJmw``
+
+- Last week, we introduced MCMC and HMC
+	- Another difficult machine to handle.
+- Remember - the theme of this course is to flow.
+	- But you don't have to understand everything instantly to keep moving forward
+- Modeling events is tricky
+	- Discrete, unordered outcomes
+		- Like the globe-tossing sim at the start
+	- Observations are counts
+	- Uknowns are probabilities, odds
+	- Everything interacts always everywhere
+		- Can't treat everything as independent or siloed
+	- Using log odds from now on
+- Remember our typical process - estimand, scientific modeling, statistical models, analyze and interpret
+- Our introduction to events is PhD admissions for UC Berkeley in the 70s/80s
+	- Stratified by: 
+		- Department (Physics, psych, etc.)
+		- Gender of applicant
+	- Estimand: was there gender discrimination in graduate admissions?
+		- ``G -> A``
+		- Departments have varying availability.
+			- ``D -> A``
+		- Different genders typically populate certain fields/departments more frequently
+			- ``G -> D``
+		- When we refer to gender, what's the actual impact? Probably the perceived gender.
+			- i.e. If an officer sees their gender, do they act differently?
+			- ``G -> G* -> A``
+			- ``R -> A``
+			- We can try to blind ``G* -> A``
+		- Which of these paths is "discrimination?
+			- ``G -> A`` is direct discrimination - when a referee sees a gender, they behave for/against them
+			- ``G -> D -> A`` is indirect discrimination - different genders are disproportionately affected by departments
+			- Both make up total discrimination - what a person experiences
+				- Requires mild assumptions, where the others require strong assumptions
+			- Often, what we can estimate is not what we want.
+			- Ignore confounds for now
+		- When we do a simple model with no direct discrimination, the gender preferences for departments make the acceptance rates uneven.
+			- But when we drop the rates for gender 1, the overall pattern is the same.
+			- Note: this is a really unsatisfying model
+		- Remember - **observe** counts of events, **estimate** probability (log-odds) of events
+			- Ex. globe tossing model - we need the proportion of water stratified by other variables
+		- Good time to introduce **generalized linear models**
+			- Linear models: expected value is additive ("linear") combination of parameters
+				- $Y_i \sim Normal(\mu_i, \sigma)$
+				- $\mu_i = \alpha + \beta_XX_i + \beta_ZZ_i$
+				- Generally, you can only do this with a normal distribution because it isn't bounded on either side.
+					- Probabilities need to be restricted between 0 and 1. Linear models break this.
+					- We can address this. Use generalized linear model to turn linear model into a line that fits. 
+						- GLM is a function of probability that outputs a linear model. 
+			- Generalized linear model: expected value is some function of an additive combination of parameters
+				- $Y_i \sim Bernoulli(p_i)$
+				- $f(p_i) = \alpha + \beta_XX_i + \beta_ZZ_i$
+				- Let's explain this with the Berkeley example
+					- $Y_i$ 0/1 of some event happening. Powered by a probability - in this case, $p_i$
+
+
+
+
+
+
+
+
