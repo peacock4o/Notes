@@ -962,11 +962,45 @@ bayesian_statistics
 				- $f(p_i) = \alpha + \beta_XX_i + \beta_ZZ_i$
 				- Let's explain this with the Berkeley example
 					- $Y_i$ 0/1 of some event happening. Powered by a probability - in this case, $p_i$
-
-
-
-
-
-
-
-
+					- $f$ is the **link function** because it links the parameters of distribution to a linear model.
+					- $f^{-1}$ is the **inverse** link function. Converts linear model to probability 
+			- Distributions are a relative number of ways to observe data given assumptions about rates, probabilities, slopes, etc.
+				- Distributions are matched to constraints on observed variables
+					- Probability distributions are just ways of counting up number of ways data could arise given assumptions
+					- When we do this, the probability distribution generally matches a small family of common distributions
+				- Link functions are matched to distributions of outcome variable
+- Exponential probability distributions
+	- Family of common distributions, start by building up from the Exponential distribution.
+		- Exponential distribution - $y \sim Exponential(\lambda)$
+			- Distribution of the time to an event that has a constant rate in time
+			- Ex. waiting for the bus.
+				- t represents time passing, p is probability that you're still waiting for the bus
+					- Start out at 1. You **must** wait some amount of time.
+					- As time goes on, the probability of you still waiting goes down.
+						- Probability goes down because as time goes on, the event has had more opportunities to happen.
+			- Values sampled from the posterior distribution are **latency** (time). Greater than 0, continuous values.
+		- Binomial distribution - $y \sim Binomial(n,p)$
+			- When we count the events associated with an exponential process, we get the Bionmial distribution.
+			- Looks kind of like the normal distribution. Exponentially distributed. Bounded in time.
+			- If you have a process producing events in continuous events and you count those events, you get a binomial distribution.
+				- Set an observation window, observe exponential processes.
+			- Ex. Fish swimming along a river
+				- Swimming at an exponential rate
+				- Constant time
+				- Will observe them exponentially distributed.
+				- If you do so between some time frame (like noon to 2:00) and count the number of fish, they will have a roughly binomial distribution
+		- Poisson distribution - $y \sim Poisson(\lambda)$
+			- Special case of the Binomial distribution where we don't know the maximum.
+				- Ex. we don't know the number of fish
+			- Fundamentally the same as the count of the exponential distribution - this is why it shares the $\lambda$ parameter.
+		- Gamma distribution - $y \sim Gamma(\lambda, k)$
+			- Sum up exponential processes
+			- Generally arises when multiple exponential processes are summed together
+		- Normal distribution - $y \sim Normal(\mu, \sigma)$
+			- Absorbing state - "can't get out once you're there."
+			- Large mean of Gamma
+		- **KEY TAKEAWAY** - know the constraints and observations. 
+			- You cannot "test" if your data is "normal"
+			- Distributional assumptions are assumptions about constraints on observations.
+				- i.e. Distributions are matched to **constraints** on observed variables
+				- **Link functions are matched to distributions.**
