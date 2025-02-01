@@ -14,6 +14,9 @@ my_links
 
 ## Deception-Based Defense
 
+## Distributed Systems
+- ``https://mwhittaker.github.io/consistency_in_distributed_systems/3_crdt.html``
+
 ## Finance
 - ``https://www.youtube.com/watch?v=pr-u4LCFYEY``
 - ``https://www.youtube.com/shorts/OUGDlKnRLOI``

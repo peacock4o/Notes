@@ -1004,3 +1004,14 @@ bayesian_statistics
 			- Distributional assumptions are assumptions about constraints on observations.
 				- i.e. Distributions are matched to **constraints** on observed variables
 				- **Link functions are matched to distributions.**
+- Logit link
+	- Logit = log odds. Read as such.
+	- Bernoulli/Binomial models use this frequently
+		- Remember what these actually are
+			- Bernoulli is a coin toss distribution
+			- Binomial is a sum of coin tosses
+	- $logit(p_i) = log \frac{p_i}{1 - p_i}$
+	- This lets us attach linear models to odds
+	- We think of probabilities as they are, but all the machinery uses log-odds scale
+		- "Log-odds scale": the value of the linear model
+		
