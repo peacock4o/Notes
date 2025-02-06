@@ -16,6 +16,10 @@ my_links
 
 ## Distributed Systems
 - ``https://mwhittaker.github.io/consistency_in_distributed_systems/3_crdt.html``
+- ``https://dl.acm.org/doi/fullHtml/10.1145/2500500``
+- ``https://dl.acm.org/doi/fullHtml/10.1145/2500500#R11``
+- ``https://www.cs.utexas.edu/~rossbach/cs380p/papers/Counters.html``
+- ``https://www.youtube.com/watch?v=OOlnp2bZVRs``
 
 ## Finance
 - ``https://www.youtube.com/watch?v=pr-u4LCFYEY``
