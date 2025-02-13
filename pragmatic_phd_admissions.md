@@ -1,0 +1,173 @@
+pragmatic_phd_admissions
+========================
+- Category: Learning
+- Tags: 
+- Created: 2025-02-12T18:29:53-08:00
+
+## Intro
+- There's a lot of advice on PhD apps online. Some of it is good, some is bad.
+	- I'll try my best to give tips and tricks on what was actually helpful
+- I'll denote parts that I felt were strong with ``(S)``.
+- The general theme of the guide is "show, don't tell"
+	- Throughout your materials, you're trying to show the admissions committee that you're normal and can be trusted with a fat stipend.
+		- Do the math on what a PhD program is worth. For CMU, mine is worth ~120k per year. x5/6 years means this is a big commitment.
+	- Which of these sounds more persuasive? Which demonstrates passion better?
+		- "I am very passionate about cybersecurity."
+		- "I did 4 cybersecurity projects over the past two years on my own."
+	- You're trying to **tell your story** while also **demonstrating aptitude**
+		- For me, I was trying to tell that I cared about open source, accessible security and privacy, influenced by my childhood experiences.
+			- I tried to provide evidence to this through work and experiences, which also simultaneously demonstrated aptitude/passion.
+- **IMPORTANT** TAKE THIS GUIDE WITH A GRAIN OF SALT **IMPORTANT**
+	- I am most certainly NOT an admissions advisor. This is written without vision into the apparent black box of admissions.
+	- Maybe I'll update this if I serve on adcom at some point in the future. 
+- **IMPORTANT** READ THE WHOLE DOCUMENT **IMPORTANT**
+	- I tried to make this as no-fluff as possible. Everything is in here for a reason.
+	- OK, maybe a couple of the links can be skipped. But try not to!
+## Pragmatic PhD Advice
+- Choosing schools
+	- This is misleading. You should choose professors that you want to work with.
+	- Not all professors are looking for students, and not all schools have fantastic programs. Whittle your list down.
+		- I applied to 4? schools. This felt a bit low. I would recommend applying to 8-9+ unless you have insane research fit.
+	- Research + personality fit with your future PI is *monstrously* important.
+		- ``(S)`` For me, DDM at Carnegie Mellon is pretty much the only lab in the country that does deception + cyber psychology work
+			- I certainly made it a point to bring this up in my SOP. No harm in saying this outright. 
+- Statement of purpose (SOP)
+	- I pretty much already said the big things in the intro section.
+	- The goal of the SOP is to tell a more personal story. Try to capture YOUR essence.
+		- In other words - this is NOT a resume. 
+			- Keep the citations minimal and try to talk more about:
+				- *Why* you did xyz
+				- *What* general philosophy did you follow while doing xyz?
+				- *How* you felt after doing xyz or at some other abc time.
+		- Other people say this frequently in PhD tips. I agree with this advice.
+	- My SOP followed this general structure
+		- **Intro**
+			- Keep it simple, stupid.
+			- Add a hook. Short and simple.
+				- "Perception shapes reality. This is the fundamental tenet of cyber deception, a defensive practice focused on prompting, identifying, and exposing behaviors characteristic of covert cybercriminals by simulating infrastructure and information within a computer network. "
+				- Now that I look back, this was probably a bit wordy. 
+				- ``(S)`` Finding the correct balance of descriptive and straightforward is the challenge in writing a good SOP. 
+			- General statement
+				- ``(S)`` "I seek to continue my research in cyber deception through a PhD program in Societal Computing at CMU, working alongside experts in the ever-changing field of cybersecurity to make the world more safe and free."
+				- I felt this was a really good intro. Talks about intent, long term goals, and means to achieve this (all at a high level.)
+			- This was my entire intro. Three sentences. Again, this should be really concise.
+		- **Competitions**
+			- Here, I talked about CTFs, CCDC, and VIVID. Touched on the combination of offensive and defensive experience.
+			- Again, try to tell a story while demonstrating your aptitude.
+				- ``(S)`` This section was about competitions, but I discussed how they made me curious in the blending of offensive and defensive techniques.
+		- **Independent Research**
+			- I use the term "research" pretty liberally here. This was where I talked about RSA and another personal project ("RAD").
+			- This was the section that felt the most like a CV while writing. Kind of problematic, but it was necessary for a contiguous story.
+		- **Open Source Development**
+			- This section, I discussed some long term goals (open source development) and used another personal project as evidence, which built on RSA and RAD.
+			- ``(S)`` Weaving together previous sections felt really good when writing.
+				- Writing chronologically made discussing my motivations and reasoning much easier.
+			- ``(S)`` This was a good case of combining past experiences with personal values/motivations.
+		- **Motivations**
+			- Here, talk about what motivates you. Good place to talk about personal obstacles in your education.
+			- Try to discuss how your lived life has shaped your current motivations!
+		- **Goals**
+			- Straightforward. Talk about what you want to do in the future and **why a PhD specifically is important for this**
+			- This section should be supported by all previous sections. You shouldn't need to do any justifying here - just state what you want clearly.
+			- This section is different from Motivations. Motivs discusses general guiding values you have, while Goals discusses specific things you want to do or be **in accordance with your motivations**
+		- **Professors of Interest**
+			- Talk about professors of interest, their research, and ideas you may have.
+				- Assume that these professors of interest are going to read your SOP. Try to make insightful comments.
+			- This part should honestly be easy, **if** you've already done your research when choosing schools to apply to. 
+		- **Conclusion**
+			- At this point, you should have said everything that needs to be said. Use this as a place to be respectful and leave the SOP on a good note.
+			- "The opportunities and community that Carnegie Mellon provides are unmatched, and I hope to use such liberties to their fullest extent. Thank you for your consideration, and I look forward to speaking with you soon."
+- Letters of rec.
+	- Here are the people I would recommend asking:
+		- Professors that you've performed well with **and demonstrated extra effort/interest.**
+			- I asked the advisor for my cybersecurity club, Dr. Brent Lagesse. He knew about our performance in competitions and my interest in cyber deception.
+		- Professionals that know you well and can speak on your abilities, motivations, and trustworthiness.
+			- I asked the other advisor of my club, Jesse Moore, who runs UW IT.
+			- I also asked Tim Pappa, a former FBI agent that I met at RSA and did a project with.
+		- Note: Some guides online recommend to only ask for LORs from professors. 
+			- I personally disagree. They can be professionals. But they need to be **relevant, respected, and good at what they do.**
+	- Ask early. The earlier the better, to be honest.
+		- Professors can write letters anytime, but submission is within a certain window of time. Don't forget this! 
+			- Professors may need to personalize letters on a per school basis. 
+		- Ask them to submit the letters 3 weeks before the submission deadline for each school. Minimum 2 weeks, but try to make it 3.
+	- Have your recommenders read this link. You should also read it, too. It helps frame your mindset of an LOR.
+		- ``https://cs.brown.edu/~sk/Memos/Grad-School-Recos/``
+- CV writing
+	- Writing your CV in LaTeX makes it feel more professional. Here's the template I used.
+		- ``https://www.overleaf.com/latex/templates/academic-cv-template/gmyytjmdbvdm``
+		- This is ultimately personal preference.
+		- I tried to stay away from templates with flashy colors or formatting. 
+			- Clean, concise, formal is the name of the game.
+			- Your text content should be the interesting part! So make it easdy to read.
+	- ``(S)`` Highlight the mix of experience and performance that makes you YOU! Be unique! Don't feel pressured to fit the experiences of others!
+		- Here are the categories I wrote, in the order they populated the CV.
+			- Education
+				- Degree, GPA, duration 
+			- Research Experience
+				- "Research" can be pretty broad. This doesn't need to be work with a lab or a professor
+					- ``(S)`` Essentially all of my "research" experience was me just exploring something on my own in a structured manner
+				- I'd recommend talking about personal projects here.
+					- *But make sure that you're trying to do something new!*
+			- Competition Experience
+				- For cybersec in particular, this is really valuable.
+				- ``(S)`` Doing decently well in both offensive and defensive competitions shows that your'e well rounded 
+			- Industry Experience
+			- Leadership and Service
+			- Awards and Sponsorship
+			- Other
+## Useful Links (grouped by affiliated school)
+- Brown
+	- ## (!) CS PhD FAQ
+	- Another super good, no-fluff guide like Matt Might's.
+- CMU
+	- Sample SoP for CS
+		- ``https://drive.google.com/file/d/15KW8EIwIRr2vew4Xh2NbFAWrNJtX3uee/view``
+	- CS FAQ
+		- ``https://www.cs.cmu.edu/academics/faq``
+- Columbia
+	- CV Writing Sample
+		- ``https://www.careereducation.columbia.edu/sites/default/files/Sample%20Undergraduate%20Science%20CV.pdf``
+- Cornell
+	- Security Group info (includes faculty)
+		- ``https://tech.cornell.edu/research/security-privacy/``
+	- Cornell acceptance rate stats
+		- ``https://gradschool.cornell.edu/about/program-metrics-assessments-and-outcomes/doctoral-program-statistics/``
+	- CV Writing Guide
+		- ``https://gradschool.cornell.edu/career-and-professional-development/pathways-to-success/prepare-for-your-career/take-action/resumes-and-cvs/https://gradschool.cornell.edu/career-and-professional-development/pathways-to-success/prepare-for-your-career/take-action/resumes-and-cvs/``
+- Harvard
+	- Harvard Cybersecurity Program
+		- ``https://www.harvard.edu/programs/cybersecurity/``
+- Misc.
+	- Application Advice
+		- ``https://www.wigraph.org/spotlights/the-wigraph-guide-to-applying-to-phd-programs/``
+	- Elements of Style
+		- ``https://www.amazon.com/Elements-Style-Fourth-William-Strunk/dp/020530902X`` 
+		- Good writing style book
+	- Latex tikz flowchart video tutorial
+		- ``https://www.youtube.com/watch?v=LoBC8zIB-3k``
+	- LaTeX documentation
+		- ``https://www.overleaf.com/learn`` 
+		- ``https://en.wikibooks.org/wiki/LaTeX/PGF/TikZ``
+- MIT
+	- Sample SOPs
+		- ``https://graphics.stanford.edu/~zhossain/grad/sop_mit.pdf``
+		- ``https://eugenielai.github.io/posts/another-annotated-sop.html``
+	- What professors look for at MIT
+		- ``https://www.eecs.mit.edu/academics/graduate-programs/admission-process/what-faculty-members-are-looking-for-in-a-grad-school-application-essay/``
+	- Twitter thread about admissions process and recommendations
+		- ``https://x.com/fadeladib/status/1353020079257038848``
+		- Not bad resource. Pretty straightforward.
+- Princeton
+	- CV Writing Guide
+		- ``https://careerdevelopment.princeton.edu/guides/resume-cv-cover-letter-diversity-statement/building-your-cv-guide-graduate-students``
+- UAlabama
+	- ## (!) Matt Might's No-Fluff Guide to STEM PhD Apps.
+		- ``https://matt.might.net/articles/how-to-apply-and-get-in-to-graduate-school-in-science-mathematics-engineering-or-computer-science/``
+		- INSANE RESOURCE. Make sure to check out his other pages, too.
+## Fellowships
+- NSF fellowship (very known)
+	- ``https://www.research.gov/grfp/Login.do``
+
+## Other tips that didn't fit elsewhere
+- HAVE A BACKUP PLAN. Grad school admissions are essentially a lottery.
+- 
