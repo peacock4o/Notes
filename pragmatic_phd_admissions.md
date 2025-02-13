@@ -171,4 +171,6 @@ pragmatic_phd_admissions
 
 ## Other tips that didn't fit elsewhere
 - HAVE A BACKUP PLAN. Grad school admissions are essentially a lottery.
-- 
+- Don't panic. You are doing great.
+	- This is by far the biggest, most important piece of advice I can impart.
+	- Either you get in, or you don't. Don't stress, especially not when your application is submitted and there's nothing more you can do.
