@@ -117,7 +117,8 @@ pragmatic_phd_admissions
 			- Other
 ## Useful Links (grouped by affiliated school)
 - Brown
-	- ## (!) CS PhD FAQ
+	- **(!)** CS PhD FAQ
+		- ``https://parentheticallyspeaking.org/articles/us-cs-phd-faq/``
 	- Another super good, no-fluff guide like Matt Might's.
 - CMU
 	- Sample SoP for CS
@@ -161,7 +162,7 @@ pragmatic_phd_admissions
 	- CV Writing Guide
 		- ``https://careerdevelopment.princeton.edu/guides/resume-cv-cover-letter-diversity-statement/building-your-cv-guide-graduate-students``
 - UAlabama
-	- ## (!) Matt Might's No-Fluff Guide to STEM PhD Apps.
+	- **(!)** Matt Might's No-Fluff Guide to STEM PhD Apps.
 		- ``https://matt.might.net/articles/how-to-apply-and-get-in-to-graduate-school-in-science-mathematics-engineering-or-computer-science/``
 		- INSANE RESOURCE. Make sure to check out his other pages, too.
 ## Fellowships
