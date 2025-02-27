@@ -12,6 +12,15 @@ my_links
 
 ## Cyber (Misc.)
 
+## DDM
+- ``https://www.cmu.edu/dietrich/sds/ddmlab/papers/Lejarragaetal2011.pdf`` 
+- ``https://arxiv.org/pdf/2111.10268``
+	- SpeedyIBL
+- ``https://www.sciencedirect.com/science/article/abs/pii/S0364021303000314``
+	- Introducing IBLT
+- ``https://www.cmu.edu/dietrich/sds/ddmlab/cognitivemodeling.html``
+	- IBL models
+
 ## Deception-Based Defense
 
 ## Distributed Systems
@@ -69,12 +78,7 @@ my_links
 	- Saarland (German) textbook
 	- Currently on Section ``2.1``
 
-## Psychology + Decision Making
-- ``https://www.cmu.edu/dietrich/sds/ddmlab/papers/Lejarragaetal2011.pdf`` 
-- ``https://arxiv.org/pdf/2111.10268``
-	- SpeedyIBL
-- ``https://www.sciencedirect.com/science/article/abs/pii/S0364021303000314``
-	- Introducing IBLT
+## Psychology
 
 ## Rust
 
