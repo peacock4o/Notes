@@ -54,3 +54,7 @@ reading_list
 ## Done
 
 - 
+
+## Other Links
+
+- ``https://cbmm.mit.edu/lh-computational-cognitive-science-readings``
