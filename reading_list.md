@@ -34,6 +34,9 @@ reading_list
 		- ``https://pdfs.semanticscholar.org/b21a/287481fd3d15256b74484bb82ac2044ea862.pdf``
 	- Sensitivity to sampling in Bayesian word learning
 		- ``https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-7687.2007.00590.x`` 
+- Estimating and Penalizing Induced Preference Shifts in Recommender Systems
+	- ``https://proceedings.mlr.press/v162/carroll22a/carroll22a.pdf``
+
 ### Textbooks
 - OCaml Programming: Correct, Efficient, Beautiful
 	- ``https://cs3110.github.io/``
@@ -58,3 +61,4 @@ reading_list
 ## Other Links
 
 - ``https://cbmm.mit.edu/lh-computational-cognitive-science-readings``
+- ``https://julialang.org/``
