@@ -188,19 +188,44 @@ gametheory
 		- What if we change two dominated strategies when believing in mixed strategy? Individual preference doesn't change, but expected value does.
 			- There's more to payoff numbers than order! 
 
+## CHAPTER 5 - GENERAL ASSUMPTIONS AND METHODOLOGY
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- Game theory is intended to apply logic to strategic situations.
+	- When modeling with game theory, we need to balance realism with manageable mathematics
+	- Always trading off ease of analysis as realistic feature space grows
+		- Therefore, the best models are simple yet flexible
+		- Proper model development is CRUCIAL. It's also sometimes trial and error.
+- Ex. Wife Game
+	- When asking wife to do something, you can model it as coarse or refined.
+	- The question becomes: which one?
+		- In this case, the little details (like body language) matter a lot, so refined makes more sense.
+- Generally, games are abstractions from reality with a small selection of important, realistic features. Modeling is a laborious and important process.
+- We assume **rationality** when modeling games
+	- AKA each player selects the action that leads to the outcome they most prefer.
+		- This is reasonably easy with numerical expected payoff values.
+		- Also, keep in mind that this doesn't necessarily mean the player's own highest payoffs. What about an altruistic player interested in maximizing the payoffs of others?
+		- For most of the book, we treat players as only caring about themselves. We also treat their payoffs solely as their monetary gain - until we start talking about risk aversion.
+			- See *behavorial economics* for more
+- We also assume that each player understands the game being played *fully*
+	- AKA each player knows the extensive-form and/or normal-form of the game they are playing, including an inability to distinguish between nodes in the same information set during play
+	- " A particular fact F is said to be common knowledge between the players if each player knows F, each player knows that the others know F, each player knows that every other player knows that each player knows F, and so on" 
+	- This does **not mean** symmetric knowledge is guaranteed about location in the extensive form, but rather that both players know of the extensive form's structure
+		- We will explore asymmetric information later
+- For the rest of the book, we'll discuss rational behavior
+	- Essentially two concepts
+		- Theories of how games are/should be played (**solution concepts**)
+		- How solution concepts are applied to various games
+	- What about the four parts?
+		- This was Part 1
+		- Part 2 details rationalizability of action
+			- A player is thought to be rational if they a) intentionally form some belief about other players and b) select a strategy to maximize their expected payoff
+			- The *rationalizability* solution concept combines the above definition with the assumption that the game and player's rationality are common knowledge.
+			- Nash Equilibrium also assumes on some institution to coordinate players so their beliefs and actual behavior are consistent.
+		- Part 3 details refinements on rationality
+			- In particular, these refinements are sensitive to specific information sets in the extensive-form
+				- See backward induction, subgame-perfect equilibrium, and negotiation variants
+		- Part 4 details games with "exogenous" random events ("moves of nature")
+			- Solution concepts are called Bayesian rationalizability, Bayesian Nash equilibrium, and perfect Bayesian equilibrium
+- The above assumptions are good for analysis. But they certainly aren't realistic all the time
+	- People may be unable to perform the calculations to optimize payoffs, or may have incomplete knowledge of the game, or have bias, or etc.
+	- Some people have taken shots at modeling these imperfections, but regardless, you must always consider how appropriate your theoretical solution applies to reality.
