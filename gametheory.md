@@ -119,42 +119,42 @@ gametheory
 			- With two players, we can visualize this in a matrix. Ergo, normal form games are sometimes called "matrix games"
 	- Examples of normal form games
 		- Matching Pennies: Two players reveal their coins. If they choose the same, p1 gets both coins. Otherwise, p2 gets both coins.
-			- ```
-			       H      T
-			H (1,-1) (-1,1)
-			T (-1,1) (1,-1)
-			```
+ ```
+       H      T
+H (1,-1) (-1,1)
+T (-1,1) (1,-1)
+```
 		- Prisoner's Dilemma: Two prisoners (players) can cooperate or defect against each other. 
-			- ```
-			      C     D
-			C (2,2) (0,3)
-			D (3,0) (1,1)
-			```
+```
+      C     D
+C (2,2) (0,3)
+D (3,0) (1,1)
+```
 		- Battle of the Sexes: Guy and gal want to go on a date, but cannot communicate (move simultaneously and independently.) Guy prefers movies, gal prefers opera, but both would rather be together.
-			- ```
-			      O     M
-			O (2,1) (0,0)
-			M (0,0) (1,2)
-			```
+```
+      O     M
+O (2,1) (0,0)
+M (0,0) (1,2)
+```
 		- Hawk/dove AKA Chicken: Two people are driving towards each other. Both can swerve and save face. One can swerve and be "beaten". Neither can swerve, disfiguring both.
-			- ```
-			      H	    D
-			H (0,0) (3,1)
-			D (1,3) (2,2)
-			```
+```
+      H	    D
+H (0,0) (3,1)
+D (1,3) (2,2)
+```
 		- Pigs: There's a dominant pig and a submissive pig by a bowl in their pen. On the other side of the pen is a button to dispense food. 
 			- If neither pushes, nobody gets food. If S pig pushes, D pig eats all the food first. If D pig pushes, S pig can have some before D pig comes. If both push, D pig bullies S pig.
-			- ```
-			      P      D
-			P (4,2)  (2,3)
-			D (6,-1) (0,0)
-			```
+ ```
+      P      D
+P (4,2)  (2,3)
+D (6,-1) (0,0)
+```
 		- Coordination game: both players are rewarded if they choose the same strategy and are not if they don't
-			- ```
-			      A     B
-			A (1,1) (0,0)
-			B (0,0) (1,1)
-			```
+```
+      A     B
+A (1,1) (0,0)
+B (0,0) (1,1)
+```
 		- Pareto coordination game: Same as coordination, but now there is incentive to choose strategy A over B
 	- It's not always easy to convert between extensive form and normal form! 
 		- Consider asynchronous decisions, like the KE game. In this scenario, extensive -> normal works, but not the other way around.
@@ -187,6 +187,9 @@ gametheory
 		- Ex. if my opponent has the available strategies *L*, *M*, and *R*, and I believe in a 50/25/25 chance of choosing each respective strategy, decide the expected payoff of one of my strategies by adding all the payoff * probability for each opposing strategy
 		- What if we change two dominated strategies when believing in mixed strategy? Individual preference doesn't change, but expected value does.
 			- There's more to payoff numbers than order! 
+- Ex. UMD/LCR game in Guided Exercise
+	- Denote the pure strategy payoffs as $u_1(U,C)$ for player 1 if the two pure strategies are guaranteed played
+	- Denote the mixed strategy payoffs as $u_1(\sigma_1,C)$ given $\sigma_1 = (1/3, 2/3, 0)$ for player 1 given $sigma_1$ is the distribution of strategies.
 
 ## CHAPTER 5 - GENERAL ASSUMPTIONS AND METHODOLOGY
 
@@ -229,3 +232,40 @@ gametheory
 - The above assumptions are good for analysis. But they certainly aren't realistic all the time
 	- People may be unable to perform the calculations to optimize payoffs, or may have incomplete knowledge of the game, or have bias, or etc.
 	- Some people have taken shots at modeling these imperfections, but regardless, you must always consider how appropriate your theoretical solution applies to reality.
+
+## CHAPTER 6 - DOMINANCE AND BEST RESPONSE
+
+- Picture the following game:
+```
+      L	    R
+U (2,3) (5,0)
+D (1,0) (4,3)
+```
+	- As p1, assume that p2 has already chosen their strategy. This keeps our thinking independent.
+		- In this case, what should I choose?
+		- Well, if they chose L, my best response is U, and if they chose R, my best response is U
+		- We say that D is **dominated** and therefore should never be chosen by a rational player
+- Picture the following game:
+```
+      L	    C	  R
+U (8,3) (0,4) (4,4)
+M (4,2) (1,5) (5,3)
+D (3,7) (0,1) (2,0)
+```
+	- In particular, look at M and D. M is always better than D for all strategies, so D is dominated by M.
+		- That isn't to say that M is always the best response - but no rational player would choose D when they can choose M.
+- Picture the following game:
+```
+      L     R
+U (4,1) (0,2)
+M (0,0) (4,0)
+D (1,3) (1,2)
+```
+	- In this case, there isn't a pure strategy that dominates another, but with mixed strategies, D is dominated by both U and M
+		- Take an example where $\sigma_2 = (1/2, 1/2)$. U and M have expected payoffs 2, D has expected payoff 1
+- Formally:
+	- A pure strategy $s_i$ of player $i$ is dominated if there is a strategy (pure or mixed) $sigma_i \in \Delta S_i$ such that:
+		- $u_i(\sigma_i,s_{-i}) > u_i(s_i,s_{-i})$ for all strategy profiles $s_i \in S_i$ of the other players
+	- AKA a pure strategy is dominated if there's another strategy that's **always better**
+- We check for dominance in two steps:
+	- Check for dominance by pure strategy. Done by examination - just look at the rows!
