@@ -37,6 +37,16 @@ reading_list
 - Estimating and Penalizing Induced Preference Shifts in Recommender Systems
 	- ``https://proceedings.mlr.press/v162/carroll22a/carroll22a.pdf``
 
+- Fei recommendations
+	- CMU Advanced NLP
+		- `https://www.youtube.com/playlist?list=PL8PYTP1V4I8DZprnWryM4nR8IZl1ZXDjg`
+	- LLM Course
+		- `https://github.com/mlabonne/llm-course`
+	- Game theory schedule and readings
+		- `https://docs.google.com/spreadsheets/d/1kGVQ1WMZUFaqY29TvN6SOq1MHIeMDwL2LoBMefZ4HTI/edit?gid=0#gid=0`
+
+
+
 ### Textbooks
 - OCaml Programming: Correct, Efficient, Beautiful
 	- ``https://cs3110.github.io/``
