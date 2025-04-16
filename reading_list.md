@@ -4,7 +4,7 @@ reading_list
 - Tags: 
 - Created: 2025-02-26T18:44:58-08:00
 
-## To Read
+## To Read + Watch
 
 ### Papers
 - SpeedyIBL: A Solution to the Curse of Exponential Growth in Instance-Based Learning Models of Decisions from Experience
@@ -45,8 +45,6 @@ reading_list
 	- Game theory schedule and readings
 		- `https://docs.google.com/spreadsheets/d/1kGVQ1WMZUFaqY29TvN6SOq1MHIeMDwL2LoBMefZ4HTI/edit?gid=0#gid=0`
 
-
-
 ### Textbooks
 - OCaml Programming: Correct, Efficient, Beautiful
 	- ``https://cs3110.github.io/``
@@ -63,6 +61,10 @@ reading_list
 	- Data Analysis: A Bayesian Tutorial
 	- Machine Learning
 		- ``https://www.cs.cmu.edu/afs/cs.cmu.edu/user/mitchell/ftp/mlbook.html``
+
+### Videos
+- Probabilistic ML
+	- ``https://www.youtube.com/watch?v=TTo2kjrAuTo`` 
 
 ## Done
 
