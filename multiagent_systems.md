@@ -1,0 +1,72 @@
+multiagent_systems
+==================
+- Category: Learning
+- Tags: 
+- Created: 2025-04-26T14:48:25-07:00
+
+## CHAPTER 1 - DISTRIBUTED CONSTRAINT SATISFACTION
+
+- Multiagent systems are common. Here's a good example: distributed constraint satisfaction
+	- Given a set of variables and a set of constraints between variables, how do we assign these variables to satisfy the constraints?
+- Useful way to visualize this - graph coloring problem.
+	- Three nodes connected to one another have the constraints that they cannot be colored the same as other nodes.
+		- Each can be red, blue, or green
+- How do we formally define a CSP?
+	- A CSP consists of:
+		- Finite set of variables $X = {X_1, X_2, ..., X_n}$
+			- Ex. $X = {X_1, X_2, X_3}$
+		- Domain $D_i$ for each variable $X_i$
+			- Ex. $D_1 = {red, blue, green}, D_2 = ...$
+		- Set of constraints ${C_1, C_2, ..., C_m}$
+			- Constraints are predicated on some subset of the variables $X$
+			- Contraints restrict the participating variables
+			- Ex. `!(C_1 = red && C_2 = red)`
+	- *Instantiation* of variable subset $S \in X$ = assignment of a unique domain value for each variable in $S$
+		- It's a *legal instantiation* if all constraints which only mention variables in $S$ are satisfied
+		- A *solution* to a network is a legal instantiation of all variables
+- In distributed CSP:
+	- Each variable is controlled by an independent agent
+	- Agents can (generally) assign their own variable
+	- Agents can (generally) only communicate with neighbors in the constraint graph
+	- Agents follow a distributed algorithm - local computation + communication with other agents = organization!
+		- Good algorithms find (or disprove) a solution quickly
+		- We examine two types of algorithms:
+			- Least-commitment approach
+			- Heuristic approach
+	- Assume for all problems that messages arrive on time and in order
+- Consider: domain-pruning algorithms
+	- We start with the Revise function
+		- "For every value $v_i$ in my domain $D_i$, if my neighbor has no value $v_j$ in $D_j$ with which our constraint is satisfied, remove $v_i$ from $D_i$"
+		- Also known as "arc consistency"
+	- If this function terminates with one solution per node, we have a solution
+	- If it terminates with more than one solution per node, we *might* have a solution - inconclusive
+	- If it terminates when a node has no values in domain, there is no solution
+	- (!) The algorithm is sound (always correct) and guaranteed to terminate, but is not complete (may fail to produce a verdict)
+		- See default red/green/blue algorithm - this algorithm can be used for preprocessing, but is very weak
+	- Based on *unit resolution* from propositional logic
+		- "If $A_1$ (is true) and $\neg(A_1 \land A_2 \land ... \land A_n)$, then $\neg(A_2 \land A_3 \land ... \land A_n)$"
+		- Translate this to the situation:
+		- "If they can only be red and we can't both be red, then I can't be red."
+			- A *Nogood* is a rule detailing a forbidden value combination.
+			- We write $\neg(x_1 = red \land x_2 = red)$ as the Nogood ${x_1, x_2}$
+	- This is a weak rule, though. We need something bigger: *hyper-resolution*
+		- Essentially the same as resolution, but for all possibilities of the leading variable at once.
+		- See paper for examples, but here's an example flow:
+			- Node $i$ can be $v_1 \lor v_2 \lor ... \lor v_n$
+			- We also have a set of Nogoods, one for each $v_n$
+			- We hyperresolve these combinations to generate a new Nogood (like in unit resolution,) if it doesn't already exist in the node's set
+- Using hyper-resolution, consider the following algorithm: ReviseHR
+	- Following flow:
+		- "I am agent $i$ and I have a set of Nogoods $NG_i$. I also just got a set of Nogoods from agent $j$ called $NG^*_j"
+		- "I'll add any Nogoods from $NG^*_j$ to $NG_i$ if I didn't already have them"
+		- "Now, I'll hyper-resolve and try to generate any new Nogoods from my new set. Collect these in $NG^*_i$"
+		- "If my set **is nonempty**, then add $NG^*_i$ to $NG_i$ and send it out to my neighbors."
+			- If I produce no Nogoods, I didn't receive any new information. This is fine, but since $NG_i$ presumably changed, keep working.
+			- Producing nothing is **NOT** the same as producing an empty set. Empty set means there is no logical solution to satisfy the problem.
+		- "If I find the empty set in my generated set of Nogoods, then there's no logically no solution and I should stop working."
+			- I *want* to send the empty set, but stop myself from continuing after.
+		- "Repeat this flow until there's no more changes in my set of Nogoods $NG_i$"
+	- See red/blue exclusive nodes example - generate Nogoods sequentially until there are no more options, then deduce an empty set
+- This algorithm isn't the most practical - we have to send massive amounts of Nogoods. Neither was the Revise function. Why?
+	- Because they're *least commitment* - they are restricted to removing only provably impossible value combinations.
+	- Instead, we can use heuristics. Try out values, and backtrack when they don't work.
