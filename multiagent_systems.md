@@ -6,6 +6,7 @@ multiagent_systems
 
 ## CHAPTER 1 - DISTRIBUTED CONSTRAINT SATISFACTION
 
+### 1.1 - Defining distributed CSP
 - Multiagent systems are common. Here's a good example: distributed constraint satisfaction
 	- Given a set of variables and a set of constraints between variables, how do we assign these variables to satisfy the constraints?
 - Useful way to visualize this - graph coloring problem.
@@ -34,6 +35,8 @@ multiagent_systems
 			- Least-commitment approach
 			- Heuristic approach
 	- Assume for all problems that messages arrive on time and in order
+
+### 1.2 - Domain pruning algorithms
 - Consider: domain-pruning algorithms
 	- We start with the Revise function
 		- "For every value $v_i$ in my domain $D_i$, if my neighbor has no value $v_j$ in $D_j$ with which our constraint is satisfied, remove $v_i$ from $D_i$"
@@ -70,3 +73,41 @@ multiagent_systems
 - This algorithm isn't the most practical - we have to send massive amounts of Nogoods. Neither was the Revise function. Why?
 	- Because they're *least commitment* - they are restricted to removing only provably impossible value combinations.
 	- Instead, we can use heuristics. Try out values, and backtrack when they don't work.
+
+### 1.3 - Heuristic search algorithms
+- Name of the game - try out certain values, communicate between nodes and backtrack when needed.
+- Consider a centralized heuristic algorithm
+	- Central controller orders nodes, tries out values in a row, backtrack earlier in the row when stuff doesn't work.
+	- This is nice, but not distributed.
+- Consider a (naive) distributed heuristic algorithm
+	- Each node tries out a value and notifies neighbors of value. If not consistent with constraints, switch and notify.
+	- This is alright, but it might cycle forever, even with a solution
+- Let's combine these two (flawed) algorithms into something nicer. Specifically, let's include:
+	- The ordered structure of nodes from alg. 1
+	- The messaging algorithm from alg. 2
+- Result: **asynchronous backtracking algorithm (ABT)**
+	- Key notes:
+		- Each node communicates its value updates to *lower* priority nodes ONLY
+		- When a node receives a value from a higher node, it checks for its own congruency.
+			- If it doesn't need to move, it doesn't move
+			- If it needs to move and is able to find a new spot, it moves and sends another update to lower nodes
+			- If it needs to move and is unable to find a new spot, it deletes the value of the next highest node from its agent view, moves, updates lower nodes, and sends a Nogood with the (pruned) agent view to the next highest node (value previously deleted from view.)
+		- When a node receives a Nogood from a lower node, it records it and attempts to find a new spot. See above steps.
+	- Example: $n$ queens problem. Try running through it!
+	- ABT can be optimized for sure. Mostly revolves around Nogoods being simplified.
+		- Finding an absolutely minimal Nogood is NP-hard. Use various heuristics to cut down size without being wrong.
+
+## CHAPTER 2 - DISTRIBUTED OPTIMIZATION
+
+### Asynchronous dynamic programming
+- To discuss this, let's first consider the path planning problem
+	- The path planning problem consists of:
+		- A set of nodes $N$, comprising of $n$ nodes.
+		- A set of directed links between nodes $L$
+		- A weight function $w : L \rightarrow \mathbb{R}^+$
+			- Meaning each link has a weight
+		- Two nodes $s,t \in N$
+		- The goal is to find the path from $s$ to $t$ with the lowest total weight
+	- Also think about it like this:
+		- Consider a set of goal nodes $T \subset N$. We are interested in the shortest path from $s$ to any node $t \in T$
+
