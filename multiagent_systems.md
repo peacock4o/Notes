@@ -99,7 +99,9 @@ multiagent_systems
 
 ## CHAPTER 2 - DISTRIBUTED OPTIMIZATION
 
-### Asynchronous dynamic programming
+### 2.1 - Distributed dynamic programming for path planning
+
+#### 2.1.1 - Asynchronous dynamic programming
 - To discuss this, let's first consider the path planning problem
 	- The path planning problem consists of:
 		- A set of nodes $N$, comprising of $n$ nodes.
@@ -110,4 +112,10 @@ multiagent_systems
 		- The goal is to find the path from $s$ to $t$ with the lowest total weight
 	- Also think about it like this:
 		- Consider a set of goal nodes $T \subset N$. We are interested in the shortest path from $s$ to any node $t \in T$
-
+	- If we have a node $x$ on the shortest path between $s$ and $t$, then the section between $s$ and $x$ must also be the shortest path for them.
+		- Allows us to execute *dynamic programming*: "divide-and-conquer" style
+	- Represent the shortest distance from node $i$ to goal node $t$ as $h^*(i)$
+		- $h^*(i)$ = value function of actual shortest path to goal $t$
+		- $h(i)$ = value function of node $i$'s current estimate of shortest path to goal $t$
+	- Consider: AsyncDP alg
+		- Per node $i$, the shortest distance from $i$ to $t$ can be determined by finding neighbor $j$ with the lowest $h(j)$, adding my weight $h(j) + $
