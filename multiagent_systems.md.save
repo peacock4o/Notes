@@ -118,36 +118,12 @@ multiagent_systems
 	- $h^*(i)$ = value function of actual shortest path to goal $t$
 	- $h(i)$ = value function of node $i$'s current estimate of shortest path to goal $t$
 - Consider: AsyncDP alg
-	- Per node $i$, the shortest distance from $i$ to $t$ can be determined by :
-		- For each neighbor $j$:
-			- Add their current $h(j)$ and our weight $w(i,j)$. Set my output value for $f(j)$ to this.
-		- $h(i)$ is $min_jf(j)$
-	- This doesn't scale well - since it's worst case O(n) time, having huge search spaces doesn't really work.
-		- Time to use heuristics!
+	- Per node $i$, the shortest distance from $i$ to $t$ can be determined by:
+		- For each neighbor j:
+			- Add our weight to its $h(j)$: $h(j) + w(i,j)
+			- Add this value to $f(j)
+		- Select lowest $f(j)$ value as $h(i)$
+	- This algorithm doesn't scale well due to search spaces being potentially huge. Try heuristics!
+#### 2.1.2 - Learning real-time A*
+- 
 
-#### 2.1.2 - Learning real-time A* (LRTA*)
-- Let's start with one agent. Worst case.
-	- Our current node is $i$. Set this to $s$ (start node) when initializing.
-	- Until we reach $t$:
-		- For each neighbor $j$:
-			- Add their current $h(j)$ and our weight $w(i,j)$. Set my output value for $f(j)$ to this.
-				- *Initially, $h(j)$ will be 0. As trials take place, this will only grow.*
-		- Get the node with the smallest estimated path $arg min_jf(j)$. Set *i'* to this.
-		- Before moving, let's decide if we need to update and grow our current estimate. $h(i) \leftarrow max(h(i), f(i'))$
-			- "If the newly estimated shortest path through $j$ called $f(i')$ is greater than the old estimated path to $h(i)$, update it." 
-	- Think like this: 
-		- We find the initial shortest path.
-		- Run through more trials. If there's any legitimate reason to try out another path, take it.
-		- Continue until we don't try out any other paths - until we repeat the same path twice in a row.
-			- We don't need to try every single path!
-- LRTA* has some assumptions:
-	- Initialize node $h(i)$ to 0
-	- Each node has at least one path to $t$
-- LRTA* has some properties:
-	- $h$ values never decrease and remain *admissible* (never more than $h*(i)$)
-		- Ensure this by initializing nodes to 0 and only adding when a new shortest local path has been found.
-	- LRTA* always terminates. Also, each successful completion of a pass of LRTA* is called a trial.
-	- Repeating trials of LRTA* will converge on the shortest path when maintaining $h$-values.
-	- If LRTA* finds the same shortest path on two sequential runs, this is the shortest path.
-- LRTA* is a centralized algorithm, but can be executed (and sped up) with multiple agents. See book example in Figure 2.5
-	- This is especially helpful to break up ties.
