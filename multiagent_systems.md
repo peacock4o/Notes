@@ -151,3 +151,43 @@ multiagent_systems
 	- If LRTA* finds the same shortest path on two sequential runs, this is the shortest path.
 - LRTA* is a centralized algorithm, but can be executed (and sped up) with multiple agents. See book example in Figure 2.5
 	- This is especially helpful to break up ties.
+
+
+## APPENDIX C - MARKOV DECISION PROBLEMS (MDPs)
+
+### C.1 - The model
+- "A Markov Decision Problem (MDP) is a model for decision making in a dynamic, uncertain world."
+- An MDP is a tuple $(S,A,p,r)$
+	- $S$ - Set of states
+	- $A$ - Set of actions
+	- $p$ - Function $p : S \times A \times S \mapsto \mathbb{R}$ which specifies the *state transition probability* among states.
+		- $p(s,a,s')$ - "When I am at state $s$ and I take action $a$, what is the probability that I end up in state $s'$?
+	- $r$ - Function $r : S \times A \mapsto \mathbb{R}$ which specifies the reward given by taking an action $a$ while in state $s$
+		- Rewards are aggregated in two ways
+			- Limit-average reward
+				- $\lim^\infty_{T=1}\frac{\sum^T_{t=1}r^(t)}{T}$
+					- "$r^(t)$ is the reward you get at time step $t$."
+					- "Average out all the rewards you get over the span of performing $T$ total time steps"
+					- "As T grows, the average converges on a certain value."
+			- Future-discounted reward
+				- $\sum^{\infty}_{t=1}\beta^t r^{t}$
+					- "No averaging this time - we're just summing all the reward values"
+					- "However, we're multiplying each value by a coefficient raised to the power of the time step."
+						- Coefficient is $\beta^t$, where $0 < \beta < 1$
+					- "This means that as the time step gets larger, $\beta^t$ grows exponentially smaller - converging on 0"
+						- Also meaning that the future-discounted reward is a finite sum!
+					- "When $\beta \rightarrow 0$, future rewards are more heavily discounted - prioritizing short-term reward"
+					- "When $\beta \rightarrow 1$, future rewards are less heavily discounted - prioritizing long-term reward"
+- A (stationary, deterministic) policy $\pi : S \rightarrow A$ maps each state to an action.
+- For the future examples, we'll use future-discounted reward
+
+### C.2 - Solving known MDPs via value iteration
+- Each policy yields a total reward under each reward aggregation scheme.
+- A policy that maximizes total reward is called an *optimal policy*
+	- Generally, the algorithm to find an optimal policy is the computational task at hand
+- While linear programming can solve MDPs in polynomial time, let's instead use *value iteration* for two reasons
+	- LP-formulation of MDP is often too large to compute realistically, despite being in polynomial time
+		- Value iteration is the basis of more practical solutions, including approximations of very large MDPs
+	- Value iteration is relevant to the discussion of learning in MDPs
+- Value iteration (VI) operates as such:
+	- VI defines a value function $V^{pi} : S \rightarrow \mathbb{R}$
