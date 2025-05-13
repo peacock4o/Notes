@@ -190,4 +190,11 @@ multiagent_systems
 		- Value iteration is the basis of more practical solutions, including approximations of very large MDPs
 	- Value iteration is relevant to the discussion of learning in MDPs
 - Value iteration (VI) operates as such:
-	- VI defines a value function $V^{pi} : S \rightarrow \mathbb{R}$
+	- VI defines a value function $V^{\pi} : S \rightarrow \mathbb{R}$
+		- $V^{\pi}(s) = Q^{\pi}(s, \pi(s))$
+			- Meaning given a state $S$, find the value of acting according to policy $\pi$
+			- In my mind, this is "naive." We only care about following the exact action prescribed in the policy.
+	- VI also defines a state-action function $Q^{\pi} : S \times A \rightarrow \mathbb{R}$
+		- $Q^{\pi}(s,a) = r(s,a) + \beta \sum_{\hat{s}} p(s,a,\hat{s})V^{\pi}(\hat{S})$
+		- Meaning given a state $s$ and an action $a$, find the value of starting in $s$, taking action $a$, and continuing according to policy $\pi$
+	- $V$ gives us the value of following a policy action at a state. $Q$ gives us the value of taking an action at a state, plus the values of all following states.
