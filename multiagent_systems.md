@@ -198,3 +198,40 @@ multiagent_systems
 		- $Q^{\pi}(s,a) = r(s,a) + \beta \sum_{\hat{s}} p(s,a,\hat{s})V^{\pi}(\hat{S})$
 		- Meaning given a state $s$ and an action $a$, find the value of starting in $s$, taking action $a$, and continuing according to policy $\pi$
 	- $V$ gives us the value of following a policy action at a state. $Q$ gives us the value of taking an action at a state, plus the values of all following states.
+- Instead of the naive equations, imagine that we have an optimal policy $\pi^*$
+	- The second equation would become $V^{\pi^*}(s) = max_a Q^{\pi^*}(s,a)$
+		- Meaning that instead of choosing based on a state-action hardcoded by the policy, choose the action for which $Q^{\pi^*}(s,a)$ yields the greatest reward.
+	- When working with $V^{\pi^*}$ and $Q^{\pi&*}$, the equations are referred to as the *Bellman equations*
+	- The Bellman equations also give us a procedure for calculating the Q and V values of the optimal policy - ergo, they give us the optimal policy itself.
+	- Consider:
+		- $Q_{t+1}(s,a) \leftarrow r(s,a) + \beta \sum_{\hat{s}} p(s,a,\hat{s}V_t(\hat{s}))$
+		- $V_t(s) \leftarrow max_a Q_t(s,a)$
+			- **THIS RETURNS THE OPTIMAL ACTION**
+	- Given an MDP and initializing Q values to an arbitrary value, repeatedly iterate the two sets of assignment operators.
+	- After some set amount of time, Q and V values converge on an optimal policy.
+	- What the heck does this even mean?
+		- For $Q_{t+1}(s,a)$:
+			- Every state is paired with every action. This tuple is assigned a value which eventually converges on the total (current + future reward) of taking action $a$ in state $s$.
+		- For $V_t(s)$:
+			- Every state is assigned an action which is the most optimal (meaning it has the largest total reward.) This is done by calculating $Q_{t+1}(s,a)$ for each $a$ and setting $V_t(s)$ to the highest yielding $a$
+- In the real world, it's not so simple as performing these things.
+	- The MDP may not be fully known beforehand, requiring learning.
+	- The MDP may be too large to iterate over all instances of the equation.
+		- Example: instead of a single value, states are represented as feature values where a state can take on many values.
+			- This would result in exponential state number - 2 states can be `[[], [a], [b], [a,b]]` - 4 states.
+			- We'd like to solve this in time polynomial to the number of features
+		- To solve this, exploit independence properties.
+			- Maybe this is like the subgames?
+	- We discuss something similar to the above problem, but instead dealing with modularity of *actions* rather than states.
+		- In a *multiagent MDP* (think each node calculating for itself), any action $a$ is really a vector of local actions $(a_1, a_2, ..., a_n)$.
+			- This means that the number of global actions is exponential to the number of agents.
+			- **But why???? What makes these actions different? It's not like they are $Q$ or $V$ values? Need to ask.**
+	- Let us consider a further subproblem
+		- Suppose that the $Q$ values for the optimal policy are already computed. How hard is it to decide the action each agent should take?
+		- In Appendix C, we mention that once an optimal policy has been converged on, we recover the optimal action in state $s$ with $argmax_a Q^{\pi^*} (s,a)$
+			- This is "easy" to do with linear growth per action.
+			- This is "hard" to do with exponential numbers of choices by all agents.
+				- **This also doesn't makes sense. Ask!**
+			- Can we do better?
+				- Generally, no. But interaction among agent actions can be quite limited.
+		
