@@ -199,13 +199,13 @@ multiagent_systems
 		- Meaning given a state $s$ and an action $a$, find the value of starting in $s$, taking action $a$, and continuing according to policy $\pi$
 	- $V$ gives us the value of following a policy action at a state. $Q$ gives us the value of taking an action at a state, plus the values of all following states.
 - Instead of the naive equations, imagine that we have an optimal policy $\pi^*$
-	- The second equation would become $V^{\pi^*}(s) = max_a Q^{\pi^*}(s,a)$
+	- The second equation would become $V^{\pi^*}(s) = \arg_a \max Q^{\pi^*}(s,a)$
 		- Meaning that instead of choosing based on a state-action hardcoded by the policy, choose the action for which $Q^{\pi^*}(s,a)$ yields the greatest reward.
 	- When working with $V^{\pi^*}$ and $Q^{\pi&*}$, the equations are referred to as the *Bellman equations*
 	- The Bellman equations also give us a procedure for calculating the Q and V values of the optimal policy - ergo, they give us the optimal policy itself.
 	- Consider:
 		- $Q_{t+1}(s,a) \leftarrow r(s,a) + \beta \sum_{\hat{s}} p(s,a,\hat{s}V_t(\hat{s}))$
-		- $V_t(s) \leftarrow max_a Q_t(s,a)$
+		- $V_t(s) \leftarrow \arg_a \max Q_t(s,a)$
 			- **THIS RETURNS THE OPTIMAL ACTION**
 	- Given an MDP and initializing Q values to an arbitrary value, repeatedly iterate the two sets of assignment operators.
 	- After some set amount of time, Q and V values converge on an optimal policy.
@@ -226,12 +226,17 @@ multiagent_systems
 		- In a *multiagent MDP* (think each node calculating for itself), any action $a$ is really a vector of local actions $(a_1, a_2, ..., a_n)$.
 			- This means that the number of global actions is exponential to the number of agents.
 			- **But why???? What makes these actions different? It's not like they are $Q$ or $V$ values? Need to ask.**
+				- **ANSWER**: Each "action" is a vector of local actions by each of $n$ agents. This means that each agent moves simultaneously. $A = A_1 * A_2$
 	- Let us consider a further subproblem
 		- Suppose that the $Q$ values for the optimal policy are already computed. How hard is it to decide the action each agent should take?
 		- In Appendix C, we mention that once an optimal policy has been converged on, we recover the optimal action in state $s$ with $argmax_a Q^{\pi^*} (s,a)$
-			- This is "easy" to do with linear growth per action.
-			- This is "hard" to do with exponential numbers of choices by all agents.
-				- **This also doesn't makes sense. Ask!**
+			- This is "easy" to do with single agent. $A^n$ where $n = 1$ is linear. 
+			- This is "hard" to do with multiple agents. $A^n$ where $n > 1$ is exponential time, so as $n$ grows, choosing the max $a$ takes exponentially longer.
 			- Can we do better?
 				- Generally, no. But interaction among agent actions can be quite limited.
-		
+				- We can exploit this. Think about calculating overall Q for multiple agents as calculating the Q (total reward) for each agent $i$ for each joint action in $A$, then adding all those indivual Q values up. Pretty intuitive.
+				- Our overall Q function becomes $Q(s,a) = \sum^n_{i=1}Q_i (s,a)$
+					- Our maximization problem becomes the max value of this new sum. We're finding the joint action which gives us the greatest joint total reward.
+					- $\arg_a \max \sum^n_{i=1}Q_i (s,a)$ 
+				- This doesn't solve our $A^n$ problem, butgenerally speaking, actions can be treated as discrete and noneffective on one another.
+					- "Each $Q_i$ depends only on a small subset of variables"
