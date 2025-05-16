@@ -181,7 +181,7 @@ multiagent_systems
 - A (stationary, deterministic) policy $\pi : S \rightarrow A$ maps each state to an action.
 - For the future examples, we'll use future-discounted reward
 
-### C.2 - Solving known MDPs via value iteration
+### 2.2 - Solving known MDPs via value iteration
 - Each policy yields a total reward under each reward aggregation scheme.
 - A policy that maximizes total reward is called an *optimal policy*
 	- Generally, the algorithm to find an optimal policy is the computational task at hand
@@ -227,16 +227,49 @@ multiagent_systems
 			- This means that the number of global actions is exponential to the number of agents.
 			- **But why???? What makes these actions different? It's not like they are $Q$ or $V$ values? Need to ask.**
 				- **ANSWER**: Each "action" is a vector of local actions by each of $n$ agents. This means that each agent moves simultaneously. $A = A_1 * A_2$
-	- Let us consider a further subproblem
-		- Suppose that the $Q$ values for the optimal policy are already computed. How hard is it to decide the action each agent should take?
-		- In Appendix C, we mention that once an optimal policy has been converged on, we recover the optimal action in state $s$ with $argmax_a Q^{\pi^*} (s,a)$
-			- This is "easy" to do with single agent. $A^n$ where $n = 1$ is linear. 
-			- This is "hard" to do with multiple agents. $A^n$ where $n > 1$ is exponential time, so as $n$ grows, choosing the max $a$ takes exponentially longer.
-			- Can we do better?
-				- Generally, no. But interaction among agent actions can be quite limited.
-				- We can exploit this. Think about calculating overall Q for multiple agents as calculating the Q (total reward) for each agent $i$ for each joint action in $A$, then adding all those indivual Q values up. Pretty intuitive.
-				- Our overall Q function becomes $Q(s,a) = \sum^n_{i=1}Q_i (s,a)$
-					- Our maximization problem becomes the max value of this new sum. We're finding the joint action which gives us the greatest joint total reward.
-					- $\arg_a \max \sum^n_{i=1}Q_i (s,a)$ 
-				- This doesn't solve our $A^n$ problem, butgenerally speaking, actions can be treated as discrete and noneffective on one another.
+- Let us consider a further subproblem
+	- Suppose that the $Q$ values for the optimal policy are already computed. How hard is it to decide the action each agent should take?
+	- In Appendix C, we mention that once an optimal policy has been converged on, we recover the optimal action in state $s$ with $argmax_a Q^{\pi^*} (s,a)$
+		- This is "easy" to do with single agent. $A^n$ where $n = 1$ is linear. 
+		- This is "hard" to do with multiple agents. $A^n$ where $n > 1$ is exponential time, so as $n$ grows, choosing the max $a$ takes exponentially longer.
+		- Can we do better?
+			- Generally, no. But interaction among agent actions can be quite limited.
+			- We can exploit this. Think about calculating overall Q for multiple agents as calculating the Q (total reward) for each agent $i$ for each joint action in $A$, then adding all those indivual Q values up. Pretty intuitive.
+			- Our overall Q function becomes $Q(s,a) = \sum^n_{i=1}Q_i (s,a)$
+				- Our maximization problem becomes the max value of this new sum. We're finding the joint action which gives us the greatest joint total reward.
+				- $\arg_a \max \sum^n_{i=1}Q_i (s,a)$ 
+			- This doesn't solve our $A^n$ problem, butgenerally speaking, actions can be treated as discrete and noneffective on one another.
 					- "Each $Q_i$ depends only on a small subset of variables"
+		- Example of "Q subdivision": metal reprocessing plant.
+			- In -> Station 1 (Load and Unload) -> Station 2 (Clean) -> Station 3 (Process) -> Station 4 (Eliminate Waste) -> Station 1 (Circular) -> Out
+			- Each station is an agent.
+			- Each agent can choose to send more material to the next station, or to suspend flow. ("Pass" or "Suspend")
+			- We can reason that each station chooses actions based on the station after it - "downstream."
+				- As Station 3, I'm not going to send metal to Station 4 if I know it can't handle the new load.
+			- Therefore, the global $Q$ function becomes $Q(a_1, a_2, a_3, a_4) = Q_1(a_1, a_2) + Q_2(a_2, a_3) + Q_3(a_3, a_4) + Q_4(a_4, a_1)$
+				- We want to compute the max of the the global Q. More specifically, we want to find the actions $a_1, a_2, a_3, a_4$ which yield the greatest $Q$.
+					- $\arg_{a_1, a_2, a_3, a_4} \max Q(a_1, a_2, a_3, a_4) = Q_1(a_1, a_2) + Q_2(a_2, a_3) + Q_3(a_3, a_4) + Q_4(a_4, a_1)$
+				- Here, we can employ a *variable elimination* algorithm, where we optimize one agent at a time. 
+					- Break the $\arg \max$ into parts. Let's start with agent 4.
+						- $\max_{a_1, a_2, a_3} Q_1(a_1, a_2) + Q_2(a_2, a_3) + \max_{a_4} [Q_3(a_3, a_4) + Q_4(a_4, a_1)]$
+						- "I want to find the only local $Q_i$ functions where $a_4$ is used, then group them and mark them as depending on $a_1$ and $a_3$"
+							- "I can find the optimal value of $a_4$ if I am given the optimal values of $a_1$ and $a_3$"
+					- Represent this internal $\max$ expression with a new function $e_4(A_2, A_3)$. This gives us the optimal action $a_4^*$ based on $a_1^*$ and $a_3^*$
+						- $e_4(a_3,a_1) = max_{a_4}[Q_3(a_3,a_4) + Q_4(a_4,a_1)]$
+					- Substitute this into our original global function
+						- $\max_{a_1, a_2, a_3} Q_1(a_1, a_2) + Q_2(a_2, a_3) + e_4(a_3, a_1)$
+					- We have now "eliminated" agent 4. Rather, we know that we can calculate $a_4$ given the other actions. Repeat this process.
+						- $e_3(a_2,a_1) = max_{a_3}[Q_2(a_2,a_3) + e_4(a_3,a_1)]$
+						- $\max_{a_1, a_2} Q_1(a_1, a_2) + e_3(a_2, a_1)$
+						- $e_2(a_1) = max_{a_2}[Q_2(a_1,a_2) + e_3(a_2,a_1)]$						
+						- $e_1 = \max_{a_1} e_2(a_1)$
+					- With this, we calculate each optimal action in order and use it in the next step.
+						- Calculate $a_1^*$ with $\arg_{a_1} \max e_2 (a_1)$
+						- **ASK ABOUT THIS. DOESN'T MAKE SENSE**
+			- We can implement this procedure in a number of ways. You're still taking an exponential pass over agents, but it ends up being fewer operations.
+		
+### 2.3 - Negotiation, auctions, and optimization
+- Here, we discuss distributed problem solving in an economic context.
+
+#### 2.3.1 - From contract nets to auction-like optimization
+- 

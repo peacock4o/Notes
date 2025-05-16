@@ -1,0 +1,63 @@
+ddm_paper_notes
+===============
+- Category: Learning
+- Tags: 
+- Created: 2025-05-15T18:07:21-07:00
+
+## 2003
+
+###  "Instance-based learning in dynamic decision making"
+- `https://www.sciencedirect.com/science/article/pii/S0364021303000314`
+- Experienced decision makers show lower fit to heuristics and higher standard deviation from their own actions compared to their behavior at the beginning of the learning.
+- Decision makers use accumulated and prior knowledge increasingly.
+- Instance-based learning theory (IBLT) proposes that in DDM situations, people learn by:
+	- Accumulation
+	- Recognition
+	- Refinement of instances, which include:
+		- Information on the DM situation, or "context"
+		- Action
+		- Result of action
+- Prior work
+	- Implicit and explicit learning
+	- Learning from examples and by doing
+	- Deductive and inductive learning
+	- Learning "mechanisms"
+		- "Knowledge base"
+			- What do I know?
+			- Accumulation of knowledge in declarative form
+		- "Recognition"
+			- Is this thing familiar to me? Maybe check knowledge base for this
+			- Discriminate among familiar objects
+		- "Strategies"
+			- How can I do this thing?
+			- Adaptive production systems
+		- "Evaluation Functions"
+			- How do I decide what to do next?
+			- Assessment of different alternatives to control the continuation of search in problem solving
+	- Chunking theory
+		- People accumulate chunks in long-term memory
+		- Experts recognize chunks and hold links to them in short-term memory
+		- Experts also search very selectively, using environmental cues to narrow search trees
+		- Ex: chess
+			- Skill develops mainly through recognition of features and familiarity of chunks
+			- A new player will look at every possible move they can take before selecting a (likely) suboptimal choice
+			- A more experienced player will look at a smaller subset of moves that they believe to be stronger, preemptively eliminating poorer options in their minds.
+			- A master will look at the overall state of the game.
+				- "Highly skilled people use other long-term memory structures **(templates)** in addition to chunks in short-term memory (Simon & Gobet, 1996). Experts then, may not only retrieve larger chunks, but templates filled with chunks in the slots."
+				- We know chess is dynamic under time constraints. Otherwise, it's (theoretically) a memorization game. See blitz chess!
+		- "Recognition" and "strategies" useful here
+	- Hintzman's instance-based recognition model
+		- Instances of examples are used to derive abstract concepts
+		- Secondary memory (SM) accumulates knowledge, traces are retrieved from SM by the communication of a "probe"
+			- "Probe" = recall request, "echo" = response
+		- Compiled into a system called MINERVA 2
+			- In MINERVA 2, learning consists of copying the features of an experience into a trace structure using probibalistic method.
+		- "Recognition" is useful for DDM
+	- Medin and Schaffer's theory
+		- People learn to classify objects based on the retrieval of stored examples
+		- Classification of a stimulus is based on similarity to stored category examples
+		- "Similarity" in itself is an important concept used in many other models
+		- "Recognition", "strategies", and "evaluation functions" are most useful here
+	- Logan's Instance Theory of Automization
+		- 
+		- 
