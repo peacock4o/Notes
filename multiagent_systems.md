@@ -272,4 +272,44 @@ multiagent_systems
 - Here, we discuss distributed problem solving in an economic context.
 
 #### 2.3.1 - From contract nets to auction-like optimization
-- 
+- Here's our scenario.
+	- Imagine we have a problem. This problem is too large to do by a single agent, so we split it up into smaller parts and distribute it among agents.
+		- For each agent $i$, there is a function $c_i$
+		- For any set of tasks $T$, $c_i(T)$ is the cost that agent $i$ incurs when completing **all the tasks** in $T$.
+		- Each agent has different capabilities ("strengths and weaknesses.")
+			- Therefore, certain tasks will be easier (less costly) while others will be "harder" (more costly)
+		- At the beginning of the problem, each agent starts out with some set of subtasks 
+			- We assume that this is not optimal and therefore needs adjusting.
+				- "Not optimal" = the sum of all agent's costs are not the lowest
+		- Agents then enter a "negotiation process" which improves on their assignment, culminating in optimality
+			- This process can have an "anytime property" - even if interrupted prematurely, the resulting assignment is still more optimal than the initial assignment.
+		- Negotiation consists of:
+			- Agents contracting out assignments among themselves
+				- Each "contract" consists of exchanging tasks *and money*
+	- For the previous algorithm, we can imagine a scenario where an agent "bids" their cost (or marginal cost) on an assignment and the "owning agent" gives it to the lowest bidder, repeating.
+		- This generally requires agents to enter "money-losing contracts." But there are other contract types which don't require money losing!
+			- "Cluster contracts" - contracting for a bundle of tasks
+			- "Swap contracts" - a swap of two tasks between agents
+			- "Multi-agent contracts" - simultaneous transfers among many agents.
+- Three questions arise.
+	- How can we minnimize costs of subproblems if there's a monolithic larger problem to be dealt with?	
+		- To be discussed later
+	- When/how do agents actually make offers?
+		- Through predetermined negotiation scehemes. In this case, we're looking at auctions.
+			- Each scheme consists of:
+				- "Bidding rules" - Permissible ways of making offers
+				- "Market clearing rules" - definition of the outcome based on offers
+				- "Information dissemination rules" - information made available to agents throughout the process
+			- Our auction has a explicit centralized "auctioneer"
+	- Since we're in a cooperative setting, why is "money-losing" relevant?
+		- Auctions in particular are a means of allocating scarce resources among *self-interested agents*
+			- "Self-interested" = game theoretic
+			- Our discussion of contract-nets has some similarities to the game-theoretic auction but does not apply directly.
+- We'll discussing:
+	- A linear program (LP) to address the problem of *weighted matching in a bipartite graph* - AKA the *assignment problem*
+	- An integer program (IP) to address the problem of *scheduling*
+
+#### 2.3.2 - The assignment problem and linear programming
+
+- The assignment problem, or "problem of weighted matching in a bipartite graph", goes as follows:
+	
