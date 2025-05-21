@@ -312,4 +312,46 @@ multiagent_systems
 #### 2.3.2 - The assignment problem and linear programming
 
 - The assignment problem, or "problem of weighted matching in a bipartite graph", goes as follows:
-	
+	- A (symmetric) assignment problem consists of:
+		- A set $X$ of $n$ objects
+		- A set $N$ of $n$ agents
+		- A set $M \subseteq N \times X$ of possible assignment pairs
+		- A function $v : M \rightarrow \mathbb{R}$ giving the value of each assignment pair
+	- An assignment is a set of pairs $S \subseteq M$ such that each agent $i \in N$ and each object $j \in X$ are in at most one pair in $S$
+		- Meaning an agent or object can only be in up to one pair at once
+	- A *feasible assignment* is one where all agents are assigned an object
+	- A feasible assignment $S$ is *optimal* if it maximizes $\sum_{(i,j) \in S} v(i,j)$
+		- "... if it maximizes the sum of the pair values"
+		- Note that we're trying to maximize here - not minimize like in the previously mentioned contract-net example.
+- See the book example. The solution is obvious in smaller problems, but in larger problems, this isn't the case.
+	- So how do we find the optimal assignment algorithmically?
+- First, encode the problem as a linear problem.
+	- Specifically, we can make a matrix to indicate assignment, or "assignment matrix"
+		- When pair $(i,j)$ is selected, $x_{i,j} = 1$. Otherwise, $x_{i,j} = 0$
+	- We use this to "activate" or "deactivate" values. Now, we can express the linear program as follows:
+		- Maximize $\sum_{(i,j) \in M} v(i,j) x_{i,j}$ ...
+		- Subject to:
+			- $\sum_{j | (i,j) \in M} x_{i,j} \leq 1 \forall i \in N$
+				- Each $i$ can only be in up to one pair at once
+			- $\sum_{i | (i,j) \in M} x_{i,j} \leq 1 \forall j \in X$
+				- Each $j$ can only be in up to one pair at once
+			- If you examine the equations, you can tell they allow for fractional matches - continuous. but we can solve this integrally. 
+- **Lemma 2.3.2**: *The LP encoding of the assignment problem has a solution such that for eery $i,j$ it is the case that $x_{i,j} = 0$ or $x_{i,j} = 1$. Furthermore, any optimal fractional solution can be converted in polynomial time to an optimal integral solution.*
+- Since any LP can be solved in polynomial time, **Corollary 2.3.3**: *The assignment problem can be solved in polynomial time*
+	- This doesn't solve our problems, though. 
+		- The polynomial time solution is $O(n^3)$
+		- The solution isn't parallelizable.
+		- If one of the parameters changes, we have to do the whole calculation over again.
+	- Let's instead explore the economic principle of competitive equilibrium
+		- Imagine that:
+			- Each $j \in X$ has an associated price
+			- The price vector is $p = (p_1, \cdots, p_n)$ where $p_j$ is the price of object $j$
+		- ..., given:
+			- An assignment $S \subseteq M$ 
+			- A price vector $p$
+		- ..., define the "utility" from an assignment $j$ to agent $i$ as $u(i,j) = v(i,j) - p_j$
+			- Think of $p_j$ as the value cost to acquire $j$. 
+			- Think of $v(i,j)$ as the value provided by object $j$ to agent $i$ once acquired.
+		- An assignment and a set of prices are in *competitive equilibrium* when each agent is assigned the object that maximizes their utility given current prices.
+		- Formally, *a feasible assignment $S$ and a price vector $p$ are in *competitive equilibrium* when, for every pairing $(i,j) \in S$, it is the case that $\forall k, u(i,j) \geq u(i,k)$ *
+- **Theorem 2.3.5**: *If a feasible assignment $S$ and a proce vector $p$ satisfy the competitive equilibrium condition then $S$ is an optimal assignment. Furthermore, for any optimal solution S, there exists a price vector such that $p$ and $S$ satisfy the competitive equilibrium condition.*
