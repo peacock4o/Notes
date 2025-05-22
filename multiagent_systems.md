@@ -354,4 +354,24 @@ multiagent_systems
 			- Think of $v(i,j)$ as the value provided by object $j$ to agent $i$ once acquired.
 		- An assignment and a set of prices are in *competitive equilibrium* when each agent is assigned the object that maximizes their utility given current prices.
 		- Formally, *a feasible assignment $S$ and a price vector $p$ are in *competitive equilibrium* when, for every pairing $(i,j) \in S$, it is the case that $\forall k, u(i,j) \geq u(i,k)$ *
-- **Theorem 2.3.5**: *If a feasible assignment $S$ and a proce vector $p$ satisfy the competitive equilibrium condition then $S$ is an optimal assignment. Furthermore, for any optimal solution S, there exists a price vector such that $p$ and $S$ satisfy the competitive equilibrium condition.*
+- **Theorem 2.3.5**: *If a feasible assignment $S$ and a price vector $p$ satisfy the competitive equilibrium condition then $S$ is an optimal assignment. Furthermore, for any optimal solution S, there exists a price vector such that $p$ and $S$ satisfy the competitive equilibrium condition.*
+	- What does this mean?
+		- We have the values of each assignment pair. The value may be different per pair.
+		- We also have a (universal) price for each object, stored in a vector
+			- An agent will "spend" some amount to "earn" some amount as payoff. This "utility" (marginal gain/loss) for the pair is $u(i,j)$
+		- We're aiming to create an assignment pair for each agent. This set of assignment pairs is $S$.
+		- Given an assignment $S$ and a price vector $p$, if each pair in the assignment cannot be improved by swapping objects between agents, then $S$ is optimal.
+		- We can also see this the other way around. If we know $S$ is optimal, we know there's a $p$ such that the two together satisfy the competitive equilibrium condition.
+	- What are the implications?
+		- We can "search the space of competitive equilibria" (increment or iterate through versions of pairings and $S$) to find equilibrium (and therefore optimality)
+			- One way to do this is with auction-like procedures where agents "bid" in a predetermined way.
+			- We will look at "open outcry" (ascending auction-like procedures)
+				- But only after we discuss optimization and competitive equilibrium.
+- To understand why CE applies to optimization, let's look at a general form of our LP.
+	- Maximize $\sum^n_{i=1} c_ix_i$
+	- Subject to:
+		- $\sum^n_{i=1} a_{i,j}x_i \leq b_j \forall j \in {1, ..., m}$
+		- $x_i \geq 0 \forall i \in {1, ..., n}$
+	- What does this mean?
+		- These are the parts we discussed earlier for the linear program
+		
