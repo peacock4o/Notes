@@ -375,3 +375,90 @@ multiagent_systems
 	- What does this mean?
 		- These are the parts we discussed earlier for the linear program
 		
+## CHAPTER 3 - NONCOOPERATIVE GAME THEORY
+
+- So far, we've only had cooperative situations. What about self-interested agents?
+- We model an agent's interests with a *utility function.*
+	- A mapping from the natural world to real numbers
+
+### 3.1 - Self-interested agents
+
+- This means the agent is interested in maximizing its own utility - not necessarily for good/bad things to happen to others.
+
+### 3.1.1 - Friends and enemies
+
+- See movie example (BOTS flavored)
+
+### 3.1.2 - Preferences and utility
+
+- Why is it alright to model as utility? The real world is much more complex
+	- Utility theorists would say that utility represents *preference*. We often look to von Neumann and Morgenstein's equations.
+		- Let $O$ denote a finite set of outcomes for an agent.
+		- For any pair $o_1, o_2 \in O$:
+			- Let $o_1 \succeq o_2$ denote that the agent **weakly prefers** $o_1$ to $o_2$
+			- Let $o_1 \sim o_2$ denote that the agent **is indifferent** between $o_1$ and $o_2$
+				- We can also write this as $o_1 \succeq o_2 \wedge o_2 \succeq o_1$
+			- Let $o_1 \succ o_2$ denote that the agent **strictly prefers** $o_1$ to $o_2$
+				- We can also write this as $o_1 \succeq o_2 \wedge \neg (o_2 \succeq o_1)$
+	- There may be some uncertainty with how outcomes are selected. This is codified through **lotteries**
+		- A lottery is the random selection of one of a set of outcomes according to specified probabilities.
+		- i.e. a lottery is a probability distribution over outcomes written $[p_1 : o_1 ,..., p_k : o_k]$ where:
+			- $o_i in O$
+			- $p_i \geq 0$
+			- $\sum^k_{i=1} p_1 = 1$ - all probabilities add to 1
+		- Let $\mathcal{L}$ denote the set of all lotteries.
+			- With this set, we can extend the $\succeq$ relation to apply to lotteries as well.
+				- Meaning that an agent may strictly prefer/weakly prefer/be indifferent to one lottery over another
+- **Axioms of utility theory**
+	- **Axiom 3.1.1 - Completeness**
+		- $\forall o_1, o_2, o_1 \succ o_2 or o_2 \succ o_1 or o_1 \sim o_2$
+		- This tells us that there is an order in preference, with ties allowed
+		- For every pair, the agent either prefers one over the other, or is indifferent.
+	- **Axiom 3.1.2 - Transitivity**
+		- $If \o_1 \succeq o_2 \wedge \o_2 \succeq o_3, then o_1 \succeq o_3$
+		- There is an order between preferring one pair and another with overlapping elements. Otherwise, you could have infinite loss.
+			- Consider the money pump problem
+	- **Axiom 3.1.3 - Substitutability**
+		- $If o_1 \sim o_2, then for all sequences of one or more outcomes o_3,...,o_k and sets of probabilities p, p_3,...,p_k for which p + \sum^k_{i=3} p_i = 1, [p:o_1, p_3:o_3,...,p_k:o_k] \sim [p:o_1, p_3:o_3,...,p_k:o_k]$
+			- $P_{\mathcal{l}}(o_i)$ denotes the probability that outcome $o_i$ is selected by lottery $\mathcal{l}$
+		- If an agent is indifferent between two outcomes, they are indifferent between lotteries that only vary in that outcome.
+		- Lotteries can be nested inside one another, too. See book example.
+	- **Axiom 3.1.4 - Decomposability**
+		- $If \forall o_i \in O, P_{\mathcal{l}_1}(o_i) = P_{\mathcal{l}_2}(o_i) then \mathcal{l}_1 \sim \mathcal{l}_2$ 
+		- An agent is always indifferent between lotteries which induce the same probabilities over outcomes, regardless of whether lotteries are single or nested.
+		- Also sometimes called the *"no fun in gambling"* axiom because it implies that rolling the dice more times has no impact on preference.
+	- **Axiom 3.1.5 - Monotonicity**
+		- $If o_1 \succ o_2 and p > q then [p:o_1, 1-p:o_2] \succ [q:o_1, 1-q:o_2]$
+		- If an outcome is preferred over another, the agent will prefer the lottery that gives more probability to that first outcome.
+		- Called monotonicity because the value of the probability isn't important - just the relationship between lotteries
+	- **Lemma 3.1.6**
+		- $If a preference relation \succeq satisfies the axioms of$
+			- $completeness$ (where all outcome pairs have $\succ, \prec, or \sim$ relations),
+			- $transitivity$ (where preference forms an order between overlapping pairs),
+			- $decomposability$ (where identical lotteries are indifferent regardless of form), and 
+			- $monotonicity$ (where lotteries giving more of a preferred outcome are preferred), 
+		- $... and if...$
+			- $o_1 \succ o_2$
+			- $o_2 \succ o_3$
+		- $... then there exists some probability p such that for all p' < p, o_2 \succ [p':o_1, (1-p'):o_3]$
+			- "If $o_1 \succ o_2 \succ o_3$ and we abide by the rules, then there's some probability of getting $o_1$ where below that point, I would rather take $o_2$ instead of risking it for $o_3$"
+		- $... and for all p'' > p, [p'':o_1, (1-p''):o_3] \succ o_2$
+			- "... and above that point, I would rather risk it for $o_1$ instead of taking a guaranteed $o_2$"
+		- See the proof!
+	- **Axiom 3.1.7 - Continuity**
+		- $If o_1 \succ \o_2 and o_2 \succ o_3, \exists p \in [0,1] such that o_2 \sim [p:o_1 , (1-p):0_3]
+	- If we accept completeness, transitivity, decomposability, monotonicity, and continuity, we must accept the existance of utility functions.
+		- This is the following theoreom:
+	- **Theoreom 3.1.8 - von Neumann and Morgenstern**
+		- $If a preference relation satisfies completeness, transitivity, decomposability, monotonicity, and continuity:$
+		- $... there exists a function u : \mathcal{L} such that:$
+			- $u(o_1) \geq u(o_2) iff o_1 \succeq o_2, and $
+				- "The utility of a preferred outcome is greater than the utility of a nonpreferred outcome in a pair"
+			- $u([p:o_1,...,p_k:o_k]) = \sum^k_{i=1}p_iu(o_i)$	
+				- "The utility of a lottery is the sum of (each outcome times its probability)"
+			- See proof!
+	- Why not use real values instead of utility?
+		- Because utility and direct material payoff aren't always linearly related.
+	- What if we don't want our utility to merely fit within $[0,1]$?
+		- We can write a secondary utility function that transforms it - think $u'(o) = au(o) + b$ is also a utility function for an agent, so long as a and b are constant and a is positive.
+### 3.2 - Games in normal form
