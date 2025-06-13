@@ -461,4 +461,57 @@ multiagent_systems
 		- Because utility and direct material payoff aren't always linearly related.
 	- What if we don't want our utility to merely fit within $[0,1]$?
 		- We can write a secondary utility function that transforms it - think $u'(o) = au(o) + b$ is also a utility function for an agent, so long as a and b are constant and a is positive.
+
 ### 3.2 - Games in normal form
+- Normal form is the most common representation of a game.
+	- States of the world only depend on the agents's combined actions
+	- Most other forms of games can be reduced to this
+- Normal-form games are defined as a tuple, where
+	- $N$ is a finite set of players, indexed by $i$
+	- $A = A_1 \times ... \times A_n$, where $A_i$ is a finite set of **actions** available to player $i$
+		- Each vector $a = (a_1, ..., a_n) \in A$ is called an **action profile**
+		- $A$ is every possible combination of actions by all players. Each of these combinations is an action profile.
+	- $u = (u_1, ..., u_n)$ where $u_i : A \mapsto \mathbb{R}$ is a real-valued **utility/payoff function** for player $i$
+		- This should map from the set of **outcomes**, not the set of actions (important!) Here, we assume that $O = A$
+
+#### 3.2.3 - Examples of normal-form games
+- Prisoner's dilemma
+	- Both players can choose to defect or cooperate.
+	- Any instance of $c > a > d > b$ is considered in the form of prisoner's dilemma
+	- It's always worth it to defect
+- Driver's side game
+	- Two drivers in opposite directions decide to drive on the left or right. 
+	- If they choose their own same side, they both get $x$. Otherwise, they get $0$
+	- Example of **common payoff game**
+		- A common payoff game is a game in which for all action profiles $a \in A_1 \times ... \times A_n$ and any pair of agents $i,j$, it is the case that $u_i(a) = u_j(a)$
+	- Also called **pure coordination games** or **team games.** When there is no competition, players must focus on coordinating to gain the greatest possible payoff.
+- Matching pennies game
+	- Two players flip pennies.
+	- If the coins are the same side up, Player 1 gets both coins. Otherwise, Player 2 gets both coins.
+	- Example of a **zero-sum game**, which is in itself an example of a **constant-sum game**
+		- A two-player normal-form game is **constant-sum** if there exists a constant c such that for each strategy profile $a \in A_1 \times A_2$ it is the case that $u_1(a) + u_2(a) = c$
+		- Zero-sum means payoffs sum to 0 at each action profile. One player wins, the other player loses an equal amount
+		- Rock-paper-scissors is another example of a zero-sum game
+	
+#### 3.2.4 - Strategies in normal-form games
+- We've defined the actions available to a player, but not the strategies or available choices.
+- Here are some options:
+	- **Pure strategy**
+		- Where a player selects a single action and plays it.
+		- A choice of pure strategy for each player together is called a **pure strategy profile**
+	- **Mixed strategy**
+		- Where a player randomizes over the set of available actions according to some probability distribution
+		- Why would we introduce randomness into our own choice? We'll talk about it later
+		- Let $(N,A,u)$ be a normal-form game, and for any set $X$ let $\Pi(X)$ be the set of all probability distributions over $X$. Then the set of **mixed strategies** for player $i$ is $S_i = \Pi(A_i)$
+		- The set of **Mixed-strategy profiles** is simply the Cartesian product of the individual mixed-strategy sets $S_1 \times ... \times S_n$
+		- $s_i(a_i)$ denotes the probability that an action $a_i$ will be played under mixed strategy $s_i$
+		- The subset of actions that are assigned positive probability by the mixed strategy $s_i$ is called the **support** of $s_i$
+			- Def: the **support** of a mixed strategy $s_i$ for a player $i$ is the set of pure strategies $\{ a_i | s_i(a_i) > 0 \}$
+	- A pure strategy is simply a mixed strategy where the support is a single action
+		- On the other end, a fully mixed strategy is a strategy with full support (i.e. every action has a nonzero probability)
+	- Payoff of a pure strategy is easy - just look at the matrix. However, it's not the same with mixed strategy. We must instead calculate the **expected utility**
+		- Given a normal-form game $(N,A,u)$, the expected utility $u_i$ for player $i$ of the mixed-strategy profile $s = s_1, ..., s_n$ is defined as:
+			- $u_i(s) = \sum_{a \in A} u_i(a) \prod^n_{j=1}s_j(a_j)$
+			- "We calculate the utility of an action profile times the probability that it actually happens. That probability is the total product of all players playing that action."
+
+### 3.3 - Analyzing games: from optimality to equilibrium
