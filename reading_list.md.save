@@ -69,6 +69,9 @@ reading_list
 	- ``https://www.youtube.com/watch?v=c8SLNEpFSrs``
 - AlphaZero Connect Four (Monte Carlo Tree Search)
 	- ``https://www.youtube.com/watch?v=_Y26BFaVclg``
+- CS885 Module 4: Partially Observable Reinforcement Learning
+	- ``https://www.youtube.com/watch?v=96V9tWNFaS4``
+	- See other recs at ``https://cs.uwaterloo.ca/~ppoupart/teaching/cs885-fall21/schedule.html``
 ## Done
 
 - 
