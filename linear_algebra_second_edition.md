@@ -1,0 +1,7 @@
+linear_algebra_second_edition
+=============================
+- Category: Learning
+- Tags: 
+- Created: 2025-06-26T17:17:33-07:00
+
+## DEFINITIONS AND USEFUL TERMS
