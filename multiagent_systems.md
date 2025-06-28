@@ -515,3 +515,38 @@ multiagent_systems
 			- "We calculate the utility of an action profile times the probability that it actually happens. That probability is the total product of all players playing that action."
 
 ### 3.3 - Analyzing games: from optimality to equilibrium
+
+#### 3.3.1 - Pareto Optimality
+- Intuitively, some games are more preferable to others
+- We can formalize the intuition of preferring one outcome to another as Pareto domination.
+	- Strategy profile $s$ **Pareto dominates** strategy profile $s'$ if $\forall i \in N, u_i(s) \geq u_i(s')$, and there exists some $j \in N$ for which $u_j(s) > u_j(s')$
+		- "In a Pareto-dominated strategy, some player can be made better off without making any other player worse off."
+	- Strategy profile $s$ is **Pareto optimal**, or **strictly Pareto efficient**, if there does not exist another strategy profile $s' \in S$ that Pareto dominates $s$
+		- Pareto domination is a partial ordering over strategy profiles. Some profiles dominate others, but it's not absolute.
+		- It's hard to identify a single "best" strategy, but we can have multiple noncomparable optima.
+	- Each game has at least one Pareto optimum, and there always exists at least one such optimum where all players play pure strategies.
+	- Some games have multiple optima.
+		- In zero-sum games, *all* strategy profiles are strictly Pareto efficient.
+		- In common-payoff games, all Pareto optimal strategy profiles have the same payoffs.
+
+#### 3.3.2 - Defining best response and Nash equilibrium
+- Look at the game from a single agent's point of view.
+	- If I were a single agent and I knew what everyone else was going to play, my objective is to choose the best play in response to the others.
+		- This is **best response.**
+		- Player $i$'s best response to the strategy profile $s_-i$ is a mixed strategy $s_i^* \in S$ such that $u_i(s_i^*, s_{-i}) \geq u_i(s_i,s_{-i})$ for all strategies $s_i \in S_i$
+			- Where $s = (s_i, s_{-i})$ is a way to write strategy profile $s$ as consisting of player $i$'s strategy and the strategy profile of all other players (denoted $s_{-i}$)
+			- "The best response is the strategy that gives you equal or higher payout than every other strategy in response to everyone else's played strategy profile."
+		- Not necessarily unique - unless best response is a pure strategy, there are an infinite number of best responses.
+			- In the same vein, any mixture of two pure best responses is also a best response.
+	- We don't know what everyone else is going to play, though. A best response doesn't identify an interesting set of outcomes - not a solution concept. We use it for Nash equilibrium, though.
+- **Nash equilibrium**
+	- A strategy profile $s = (s_1, ..., s_n)$ is a Nash equilibrium if, for all agents $i$, $s_i$ is a best response to $s_{-i}$
+		- "A strategy profile is a Nash equilibrium if every agent is playing its best against every other agent"
+		- NE is a *stable* strategy profile, meaning each agent would not benefit from switching its own strategy if it knew the play of others.
+	- We can divide NE into two parts: **strict** and **weak** Nash
+		- Strict Nash - a *unique* best response
+			- A strategy profile $s = (s_1, ..., s_n)$ is a *strict Nash equilibrium* if, for all agents $i$ and for all strategies $s'_i$, $u_i(s_i,s_{-i}) > u_i(s'_i, s_{-i})$
+		- Weak Nash - a *nonunique* best response
+			- A strategy profile $s = (s_1, ..., s_n)$ is a *weak Nash equilibrium* if, for all agents $i$ and for all strategies $s'_i$, $u_i(s_i,s_{-i}) \geq u_i(s'_i, s_{-i})$ and $s$ is not a strict Nash equilibrium
+			- Weak NE are "less stable" - in this, at least one player has a best response that isn't their equilibrium strategy
+		- Mixed-strategy NS are necessarily weak, while pure-strategy NE can be strict or weak (depends on game)
