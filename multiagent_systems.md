@@ -549,4 +549,26 @@ multiagent_systems
 		- Weak Nash - a *nonunique* best response
 			- A strategy profile $s = (s_1, ..., s_n)$ is a *weak Nash equilibrium* if, for all agents $i$ and for all strategies $s'_i$, $u_i(s_i,s_{-i}) \geq u_i(s'_i, s_{-i})$ and $s$ is not a strict Nash equilibrium
 			- Weak NE are "less stable" - in this, at least one player has a best response that isn't their equilibrium strategy
-		- Mixed-strategy NS are necessarily weak, while pure-strategy NE can be strict or weak (depends on game)
+#### 3.3.3 - Finding Nash equilibria
+- Mixed-strategy NS are necessarily weak, while pure-strategy NE can be strict or weak (depends on game)
+	- What's the intuition behind this? Using example of Battle of Sexes
+		- Wife = row, husband = col.
+		- Both choosing WL = (2,1)
+		- Both choosing LW = (1,2)
+		- No coordination = (0,0)
+	- Mixed NE for wife is $(\frac{2}{3}, \frac{1}{3})$ with expected payoff of $\frac{2}{3}$
+		- What does this mean? It means that if she plays this strategy, the husband has no preference among his own strategies.
+			- As in he can play either pure strategy to also get an expected payoff of $\frac{2}{3}$
+				- Since he's indifferent between pure strategies, he's also indifferent between any mixed strategy of the two.
+	- Mixed NE for the husband is $(\frac{1}{3}, \frac{2}{3})$
+	- When both play their mixed NE, they are playing one of infinite best responses to one another's NE.
+		- There is no **strict** incentive to deviate, and if either deviates, the other player is incentivized to play a pure strategy in a later game (due to updating beliefs about $p$ or $q$)
+
+#### 3.3.4 - Nash's theoreom: proving the existence of Nash equilibria
+- Lots of math here... skipping
+
+### 3.4 - Further solution concepts for normal-form games
+- NE is a **solution concept**, in which we identify interesting subsets of game outcomes. Let's explore some others.
+
+#### 3.4.1 - Maxmin and minmax strategies
+
