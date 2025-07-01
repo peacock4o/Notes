@@ -571,4 +571,33 @@ multiagent_systems
 - NE is a **solution concept**, in which we identify interesting subsets of game outcomes. Let's explore some others.
 
 #### 3.4.1 - Maxmin and minmax strategies
-
+- **Maxmin**
+	- Maxmin *strategy* - the strategy that maximizes player $i$'s worst-case outcome
+		- The maxmin strategy for player $i$ is $\arg \max_{s_i} \min{s_{-i}} u_i(s_i, s_{-i})$
+	- Maxmin *value* - the minimum amount of payoff guaranteed by a maxmin strategy. AKA security level.
+		- The maxmin value for player $i$ is $\max_{s_i} \min{s_{-i}} u_i(s_i, s_{-i})$
+	- Think of it temporally.
+		- Player $i$ commits to a (pure/mixed) strategy.
+		- Player(s) $-i$ commit to strategies such that player i's payoff is minimized
+		- Maxmin is the highest possible value that player $i$ can play into the worst-case strategies.
+	- Other agents probably won't conspire against you, but it's just the "safe guarantee" without making assumptions about other agents.
+- **Minmax**
+	- Minmax *strategy* - the strategy which minimizes player $-i$'s best-case outcome.
+		- In a two-player game, the minmax strategy for player $i$ against player $−i$ is $\arg \min_{s_i} \max_{s_{−i}} u_{−i} (s_i, s_{−i})
+		- In an n-player game, the minmax strategy for player $i$ against player $j \neq i$ is $i$’s component of the mixed-strategy profile $s_{−j}$ in the expression $\arg \min_{s_{−j}} \max_{s_j} u_j(s_j,s_{−j})$, where $−j$ denotes the set of players other than $j$.
+	- Minmax *value* - the highest value that player $-i$ can achieve given minmax play by player $i$
+		- In a two-player game, player $−i$’s minmax value is $\min_{s_i} \max_{s_{−i}} u_{−i}(s_i,s_{−i})$.
+		- In an n-player game, the minmax value is $\min_{s_{−j}} \max_{s_j} u_j(s_j,s_{−j})$
+	- Think of it temporally
+		- Player $i$ / players $j$ commit to a (pure/mixed) strategy to minimize $-i$/$-j$'s expected best response. 
+		- Player $-i$/$-j$ receeive their minimax value if they best respond to this.
+- Neither maxmin nor minmax are dependent on the other players' actions, so this is a fairly straightforward solution concept.
+- Given a mixed strategy profile $s = (s_1, s_2, ...)$
+	- We call it a *maxmin strategy profile* of a given game if everyone plays their maxmin strategy
+		- In two-player games, analagous to *minmax strategy profiles*
+		- In two-player, zero-sum games, very tight connection between minmax and maxmin strategy profiles
+- See proof - in 0sum 2p games, $v_i = \overline{v}_i = \underline(v)_i$
+- This allows to conclude that, in 0sum 2p games:
+	- Each player's maxmin value is equal to their minmax value. This is the "value of the game" for player $i$
+	- The set of maxmin strategies coincides with the set of minmax strategies
+	- Any maxmin/minmax strategy profile is a NE. These strategy profiles are the only NE. All NE have the same payoff vectors.
