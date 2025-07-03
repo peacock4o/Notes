@@ -601,3 +601,53 @@ multiagent_systems
 	- Each player's maxmin value is equal to their minmax value. This is the "value of the game" for player $i$
 	- The set of maxmin strategies coincides with the set of minmax strategies
 	- Any maxmin/minmax strategy profile is a NE. These strategy profiles are the only NE. All NE have the same payoff vectors.
+- View a NE in 0-sum games as a "saddle-point" in high-dimensional space.
+
+#### 3.4.2 - Minimax regret
+
+- Maxmin is useful to guarantee maximum payout against a minimizing opponent. However, what about an entirely unpredictable player for whom we have no belief (i.e. not Bayesian?)
+- Consider the example game in the book. You are the row player.
+  - Let's say we don't know (and don't care) about player C's payoffs. Just considering our own.
+    - In fact, we're uncertain about player C, which is why we're playing a minimax strategy.
+  - Our maxmin strategy would be to play B, since B contains our best worst-case response.
+  - If we don't think the other player is malicious, then we would lose out on a ton of potential payoff by not choosing T.
+  - This "potential loss" is called **regret**.
+- **Regret**
+  - An agent $i$'s *regret* for playing an action $a_i$ if the other agents adopt action profile $a_{-i'}$ is defined as $[\max_{a'_i \in A_i}u_i(a'_i, a_{-i})] - u_i(a_i, a_{-i})$
+  - AKA the difference between your payoff and the max amount of payoff you could have gotten by choosing another action given the opponent's action.
+- **Max regret**
+  - An agent $i$'s *maximum regret* for playing an action $a_i$ is defined as $\max_{a_-i \in A_-i} ([\max_{a'_i \in A_i} u_i(a'_i, a_{-i})] - u_i(a_i, a_{-i}))$
+  - AKA the maximum amount of regret (resulting from a maximizing action by $-i$) that agent $i$ can recieve for playing $a_i$
+- **Minimax regret**
+  - Minimax regret actions for agent $i$ are defined as $\arg \min_{a_i \in A_i}[\max_{a_-i \in A_-i} ([\max_{a'_i \in A_i} u_i(a'_i, a_{-i})] - u_i(a_i, a_{-i}))]$
+  - AKA the action that yields the smallest maximum regret.
+    - Note that this is the regret of an *action*, not a *strategy*. Try proving this!
+
+#### 3.4.3 - Removal of dominated strategies
+
+- One strategy dominates another for player $i$ if the first strategy yields $i$ a greater payoff than the second strategy, for any strategy profile of the remaining players.
+  - Three levels to this, though.
+    - **Strict domination**: If $u_i(s_i, s_{-i}) > u_i(s'_i, s_{-i}) \forall s_{-i} \in S_{-i}$
+      - AKA $s$ strictly dominates $s'$ if it's better in all situations 
+    - **Weak domination**: If $u_i(s_i, s_{-i}) \geq u_i(s'_i, s_{-i}) \forall s_{-i} \in S_{-i}$ and for at least one $s_{-i}$, $u_i(s_i, s_{-i} > u_i(s'_i, s_{-i}))$
+      - AKA $s$ weakly dominates $s'$ if it's better in at least one situation and equal in all others
+    - **Very weak domination**: $u_i(s_i, s_{-i}) \geq u_i(s'_i, s_{-i}) \forall s_{-i} \in S_{-i}$
+- A strategy is (some variant of) **dominant** for an agent if it dominates any other strategy for that agent.
+  - Strategy profiles where all strategies for agents are dominant for $i$ is a NE.
+    - This forms an *equilibrium in dominant strategies* (between players)
+  - An equilibrium made of strictly dominant strategies is the unique NE.
+    - Note the Prisoner's Dilemma. The equilibrium at (D,D) is also the only outcome that's *not* Pareto optimal.
+- A strategy $s_i$ is dominated if some other strategy $s'_i$ dominates $s_i$ in some manner
+  - All strictly dominated strategies can be ignored, or **eliminated**
+  - Eliminating one strategy can cause other strategies to become dominated
+  - A pure strategy may be dominated by a mixture of other pure strategies without being dominated by any of them independently
+- Elimination is a pretty weak solution concept, but we can use it to trim down matrices for computational advantage.
+  - Sometimes (but not often), a game can be completely solved this way, by iteratively eliminating down to a single cell.
+    - We would say such a game is solvable by iterated elimination
+- Order of elimination doesn't matter for strictly dominated strategies (*Church-Rosser* property.)
+- Which one should we use?
+  - It depends. Strict -> weak -> very weak gives us more and more reduced matrices at the cost of potentially dubious eliminations caused by order of elimination.
+
+#### 3.4.4 - Rationalizability
+
+
