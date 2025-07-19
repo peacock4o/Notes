@@ -82,3 +82,9 @@ reading_list
 - ``https://julialang.org/``
 - ``https://www.geeksforgeeks.org/dsa/minimax-algorithm-in-game-theory-set-4-alpha-beta-pruning/``
 - ``https://www.reddit.com/r/algorithms/comments/84ltar/implementing_minimax_with_alphabeta_pruning/``
+- https://github.com/MikeInnes/Poirot.jl
+- https://docs.makie.org/stable/tutorials/getting-started
+- https://geo.makie.org/v0.7.0/introduction
+- https://github.com/JuliaGeo/NaturalEarth.jl
+- https://docs.makie.org/dev/reference/plots/poly
+- https://juliaearth.github.io/geospatial-data-science-with-julia/01-geodata.html
